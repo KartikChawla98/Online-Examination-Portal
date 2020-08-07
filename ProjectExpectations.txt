@@ -1,0 +1,27 @@
+-----------------------Online Exam System------------------------
+
+Challenging Schema
+
+--Exam Engine
+
+==Details for Subjects
+
+==Details for Questions Dumping 
+
+==Questions
+
+==Answers
+
+==Candidates Response.
+
+==Candidates Attempts for each level.
+
+==Store data afer each question.
+
+==level 1 again retest 
+
+==info saving for the type of Reattempts
+
+==in report we need to show correct answers and candidates response.
+
+** we can impleme

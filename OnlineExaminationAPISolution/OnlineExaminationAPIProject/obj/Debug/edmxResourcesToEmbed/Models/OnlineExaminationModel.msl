@@ -43,8 +43,8 @@
     <EntitySetMapping Name="TestQuestions">
       <EntityTypeMapping TypeName="db_OnlineExaminationModel.TestQuestion">
         <MappingFragment StoreEntitySet="TestQuestions">
-          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="TestId" ColumnName="TestId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
           <ScalarProperty Name="UserAnswer" ColumnName="UserAnswer" />
         </MappingFragment>
@@ -76,6 +76,18 @@
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="HighestQualification" ColumnName="HighestQualification" />
           <ScalarProperty Name="CompletionYear" ColumnName="CompletionYear" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestStructures">
+      <EntityTypeMapping TypeName="db_OnlineExaminationModel.TestStructure">
+        <MappingFragment StoreEntitySet="TestStructures">
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          <ScalarProperty Name="NumberOfQuestions" ColumnName="NumberOfQuestions" />
+          <ScalarProperty Name="MaxMinutes" ColumnName="MaxMinutes" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="Technology" ColumnName="Technology" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

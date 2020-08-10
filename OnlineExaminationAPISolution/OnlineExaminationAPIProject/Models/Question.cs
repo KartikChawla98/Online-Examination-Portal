@@ -11,7 +11,7 @@ namespace OnlineExaminationAPIProject.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class Question
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,7 +19,7 @@ namespace OnlineExaminationAPIProject.Models
         {
             this.TestQuestions = new HashSet<TestQuestion>();
         }
-
+    
         public int Id { get; set; }
         public int FileId { get; set; }
         public string Technology { get; set; }
@@ -30,11 +30,10 @@ namespace OnlineExaminationAPIProject.Models
         public string Option3 { get; set; }
         public string Option4 { get; set; }
         public int CorrectOption { get; set; }
-
+    
         public virtual QuestionFile QuestionFile { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }
-
 
         public bool SetProperties(int FileId, CSVQuestion temp)
         {

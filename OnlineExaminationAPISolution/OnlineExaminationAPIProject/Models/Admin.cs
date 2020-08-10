@@ -18,6 +18,7 @@ namespace OnlineExaminationAPIProject.Models
         public Admin()
         {
             this.QuestionFiles = new HashSet<QuestionFile>();
+            this.TestStructures = new HashSet<TestStructure>();
         }
     
         public int Id { get; set; }
@@ -28,5 +29,7 @@ namespace OnlineExaminationAPIProject.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QuestionFile> QuestionFiles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TestStructure> TestStructures { get; set; }
     }
 }

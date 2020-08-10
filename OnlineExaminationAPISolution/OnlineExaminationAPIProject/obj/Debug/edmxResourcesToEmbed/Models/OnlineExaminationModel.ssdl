@@ -57,6 +57,18 @@
     <Property Name="EndTime" Type="datetime" />
     <Property Name="Score" Type="int" />
   </EntityType>
+  <EntityType Name="TestStructures">
+    <Key>
+      <PropertyRef Name="Technology" />
+      <PropertyRef Name="Level" />
+    </Key>
+    <Property Name="Technology" Type="nvarchar" MaxLength="60" Nullable="false" />
+    <Property Name="Level" Type="int" Nullable="false" />
+    <Property Name="MaxMinutes" Type="int" Nullable="false" />
+    <Property Name="NumberOfQuestions" Type="int" Nullable="false" />
+    <Property Name="LastUpdatedBy" Type="int" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="Users">
     <Key>
       <PropertyRef Name="Id" />
@@ -84,6 +96,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="AdminTestStructure">
+    <End Role="Admins" Type="Self.Admins" Multiplicity="1" />
+    <End Role="TestStructures" Type="Self.TestStructures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admins">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TestStructures">
+        <PropertyRef Name="LastUpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="QuestionFileQuestion">
     <End Role="QuestionFiles" Type="Self.QuestionFiles" Multiplicity="1" />
     <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
@@ -105,6 +129,20 @@
       </Principal>
       <Dependent Role="TestQuestions">
         <PropertyRef Name="QuestionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TestStructureTest">
+    <End Role="TestStructures" Type="Self.TestStructures" Multiplicity="1" />
+    <End Role="Tests" Type="Self.Tests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestStructures">
+        <PropertyRef Name="Technology" />
+        <PropertyRef Name="Level" />
+      </Principal>
+      <Dependent Role="Tests">
+        <PropertyRef Name="Technology" />
+        <PropertyRef Name="Level" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -138,10 +176,15 @@
     <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TestQuestions" EntityType="Self.TestQuestions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tests" EntityType="Self.Tests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TestStructures" EntityType="Self.TestStructures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="AdminQuestionFile" Association="Self.AdminQuestionFile">
       <End Role="Admins" EntitySet="Admins" />
       <End Role="QuestionFiles" EntitySet="QuestionFiles" />
+    </AssociationSet>
+    <AssociationSet Name="AdminTestStructure" Association="Self.AdminTestStructure">
+      <End Role="Admins" EntitySet="Admins" />
+      <End Role="TestStructures" EntitySet="TestStructures" />
     </AssociationSet>
     <AssociationSet Name="QuestionFileQuestion" Association="Self.QuestionFileQuestion">
       <End Role="QuestionFiles" EntitySet="QuestionFiles" />
@@ -150,6 +193,10 @@
     <AssociationSet Name="QuestionTestQuestion" Association="Self.QuestionTestQuestion">
       <End Role="Questions" EntitySet="Questions" />
       <End Role="TestQuestions" EntitySet="TestQuestions" />
+    </AssociationSet>
+    <AssociationSet Name="TestStructureTest" Association="Self.TestStructureTest">
+      <End Role="TestStructures" EntitySet="TestStructures" />
+      <End Role="Tests" EntitySet="Tests" />
     </AssociationSet>
     <AssociationSet Name="TestTestQuestion" Association="Self.TestTestQuestion">
       <End Role="Tests" EntitySet="Tests" />

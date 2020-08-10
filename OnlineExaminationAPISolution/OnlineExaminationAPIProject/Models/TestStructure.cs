@@ -12,25 +12,23 @@ namespace OnlineExaminationAPIProject.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Test
+    public partial class TestStructure
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Test()
+        public TestStructure()
         {
-            this.TestQuestions = new HashSet<TestQuestion>();
+            this.Tests = new HashSet<Test>();
         }
     
-        public int Id { get; set; }
-        public int UserId { get; set; }
         public string Technology { get; set; }
         public int Level { get; set; }
-        public Nullable<System.DateTime> StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
-        public Nullable<int> Score { get; set; }
+        public int MaxMinutes { get; set; }
+        public int NumberOfQuestions { get; set; }
+        public int LastUpdatedBy { get; set; }
+        public System.DateTime UpdateDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TestQuestion> TestQuestions { get; set; }
-        public virtual User User { get; set; }
-        public virtual TestStructure TestStructure { get; set; }
+        public virtual ICollection<Test> Tests { get; set; }
+        public virtual Admin Admin { get; set; }
     }
 }

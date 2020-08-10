@@ -139,6 +139,9 @@
     <Compile Include="Models\TestQuestion.cs">
       <DependentUpon>OnlineExaminationModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TestStructure.cs">
+      <DependentUpon>OnlineExaminationModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>OnlineExaminationModel.tt</DependentUpon>
     </Compile>

@@ -4,18 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9a84485ed31b487ca848066bd7e187c9" Name="Diagram1">
-        <EntityTypeShape EntityType="db_OnlineExaminationModel.Admin" Width="1.5" PointX="1.5" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_OnlineExaminationModel.QuestionFile" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_OnlineExaminationModel.Question" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_OnlineExaminationModel.TestQuestion" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_OnlineExaminationModel.Test" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_OnlineExaminationModel.User" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+      <Diagram DiagramId="9a84485ed31b487ca848066bd7e187c9" Name="Diagram1" ShowGrid="false" DisplayType="false" ZoomLevel="100">
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.Admin" Width="1.5" PointX="0.5" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.QuestionFile" Width="1.5" PointX="7.375" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.Question" Width="1.5" PointX="7.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.TestQuestion" Width="1.5" PointX="5.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.Test" Width="1.5" PointX="3.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.User" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="db_OnlineExaminationModel.AdminQuestionFile" ManuallyRouted="false" />
         <AssociationConnector Association="db_OnlineExaminationModel.QuestionFileQuestion" ManuallyRouted="false" />
         <AssociationConnector Association="db_OnlineExaminationModel.QuestionTestQuestion" ManuallyRouted="false" />
         <AssociationConnector Association="db_OnlineExaminationModel.TestTestQuestion" ManuallyRouted="false" />
         <AssociationConnector Association="db_OnlineExaminationModel.UserTest" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.TestStructure" Width="1.5" PointX="3.125" PointY="4" />
+        <AssociationConnector Association="db_OnlineExaminationModel.TestStructureTest" />
+        <AssociationConnector Association="db_OnlineExaminationModel.AdminTestStructure" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

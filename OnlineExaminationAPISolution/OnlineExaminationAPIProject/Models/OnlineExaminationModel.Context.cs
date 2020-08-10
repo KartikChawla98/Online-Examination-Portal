@@ -31,5 +31,6 @@ namespace OnlineExaminationAPIProject.Models
         public virtual DbSet<TestQuestion> TestQuestions { get; set; }
         public virtual DbSet<Test> Tests { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<TestStructure> TestStructures { get; set; }
     }
 }

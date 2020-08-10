@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="db_OnlineExaminationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="db_OnlineExaminationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admins">
           <Key>
             <PropertyRef Name="Id" />
@@ -62,6 +62,18 @@
           <Property Name="EndTime" Type="datetime" />
           <Property Name="Score" Type="int" />
         </EntityType>
+        <EntityType Name="TestStructures">
+          <Key>
+            <PropertyRef Name="Technology" />
+            <PropertyRef Name="Level" />
+          </Key>
+          <Property Name="Technology" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Level" Type="int" Nullable="false" />
+          <Property Name="MaxMinutes" Type="int" Nullable="false" />
+          <Property Name="NumberOfQuestions" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
@@ -89,6 +101,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="AdminTestStructure">
+          <End Role="Admins" Type="Self.Admins" Multiplicity="1" />
+          <End Role="TestStructures" Type="Self.TestStructures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admins">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestStructures">
+              <PropertyRef Name="LastUpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="QuestionFileQuestion">
           <End Role="QuestionFiles" Type="Self.QuestionFiles" Multiplicity="1" />
           <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
@@ -110,6 +134,20 @@
             </Principal>
             <Dependent Role="TestQuestions">
               <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TestStructureTest">
+          <End Role="TestStructures" Type="Self.TestStructures" Multiplicity="1" />
+          <End Role="Tests" Type="Self.Tests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestStructures">
+              <PropertyRef Name="Technology" />
+              <PropertyRef Name="Level" />
+            </Principal>
+            <Dependent Role="Tests">
+              <PropertyRef Name="Technology" />
+              <PropertyRef Name="Level" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -143,10 +181,15 @@
           <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TestQuestions" EntityType="Self.TestQuestions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tests" EntityType="Self.Tests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestStructures" EntityType="Self.TestStructures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="AdminQuestionFile" Association="Self.AdminQuestionFile">
             <End Role="Admins" EntitySet="Admins" />
             <End Role="QuestionFiles" EntitySet="QuestionFiles" />
+          </AssociationSet>
+          <AssociationSet Name="AdminTestStructure" Association="Self.AdminTestStructure">
+            <End Role="Admins" EntitySet="Admins" />
+            <End Role="TestStructures" EntitySet="TestStructures" />
           </AssociationSet>
           <AssociationSet Name="QuestionFileQuestion" Association="Self.QuestionFileQuestion">
             <End Role="QuestionFiles" EntitySet="QuestionFiles" />
@@ -155,6 +198,10 @@
           <AssociationSet Name="QuestionTestQuestion" Association="Self.QuestionTestQuestion">
             <End Role="Questions" EntitySet="Questions" />
             <End Role="TestQuestions" EntitySet="TestQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="TestStructureTest" Association="Self.TestStructureTest">
+            <End Role="TestStructures" EntitySet="TestStructures" />
+            <End Role="Tests" EntitySet="Tests" />
           </AssociationSet>
           <AssociationSet Name="TestTestQuestion" Association="Self.TestTestQuestion">
             <End Role="Tests" EntitySet="Tests" />
@@ -165,8 +212,7 @@
             <End Role="Tests" EntitySet="Tests" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="db_OnlineExaminationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -180,6 +226,7 @@
           <Property Name="FullName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Contact" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="QuestionFiles" Relationship="Self.AdminQuestionFile" FromRole="Admins" ToRole="QuestionFiles" />
+          <NavigationProperty Name="TestStructures" Relationship="db_OnlineExaminationModel.AdminTestStructure" FromRole="Admin" ToRole="TestStructure" />
         </EntityType>
         <EntityType Name="QuestionFile">
           <Key>
@@ -235,6 +282,7 @@
           <Property Name="Score" Type="Int32" />
           <NavigationProperty Name="TestQuestions" Relationship="Self.TestTestQuestion" FromRole="Tests" ToRole="TestQuestions" />
           <NavigationProperty Name="User" Relationship="Self.UserTest" FromRole="Tests" ToRole="Users" />
+          <NavigationProperty Name="TestStructure" Relationship="db_OnlineExaminationModel.TestStructureTest" FromRole="Test" ToRole="TestStructure" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -339,7 +387,56 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Tests" EntitySet="Tests" />
           </AssociationSet>
+          <EntitySet Name="TestStructures" EntityType="db_OnlineExaminationModel.TestStructure" />
+          <AssociationSet Name="TestStructureTest" Association="db_OnlineExaminationModel.TestStructureTest">
+            <End Role="TestStructure" EntitySet="TestStructures" />
+            <End Role="Test" EntitySet="Tests" />
+          </AssociationSet>
+          <AssociationSet Name="AdminTestStructure" Association="db_OnlineExaminationModel.AdminTestStructure">
+            <End Role="Admin" EntitySet="Admins" />
+            <End Role="TestStructure" EntitySet="TestStructures" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="TestStructure">
+          <Key>
+            <PropertyRef Name="Technology" />
+            <PropertyRef Name="Level" />
+          </Key>
+          <Property Name="Technology" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="MaxMinutes" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfQuestions" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tests" Relationship="db_OnlineExaminationModel.TestStructureTest" FromRole="TestStructure" ToRole="Test" />
+          <Property Name="LastUpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Admin" Relationship="db_OnlineExaminationModel.AdminTestStructure" FromRole="TestStructure" ToRole="Admin" />
+        </EntityType>
+        <Association Name="TestStructureTest">
+          <End Type="db_OnlineExaminationModel.TestStructure" Role="TestStructure" Multiplicity="1" />
+          <End Type="db_OnlineExaminationModel.Test" Role="Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestStructure">
+              <PropertyRef Name="Technology" />
+              <PropertyRef Name="Level" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="Technology" />
+              <PropertyRef Name="Level" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AdminTestStructure">
+          <End Type="db_OnlineExaminationModel.Admin" Role="Admin" Multiplicity="1" />
+          <End Type="db_OnlineExaminationModel.TestStructure" Role="TestStructure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestStructure">
+              <PropertyRef Name="LastUpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -388,8 +485,8 @@
           <EntitySetMapping Name="TestQuestions">
             <EntityTypeMapping TypeName="db_OnlineExaminationModel.TestQuestion">
               <MappingFragment StoreEntitySet="TestQuestions">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TestId" ColumnName="TestId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
                 <ScalarProperty Name="UserAnswer" ColumnName="UserAnswer" />
               </MappingFragment>
@@ -421,6 +518,18 @@
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="HighestQualification" ColumnName="HighestQualification" />
                 <ScalarProperty Name="CompletionYear" ColumnName="CompletionYear" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestStructures">
+            <EntityTypeMapping TypeName="db_OnlineExaminationModel.TestStructure">
+              <MappingFragment StoreEntitySet="TestStructures">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="NumberOfQuestions" ColumnName="NumberOfQuestions" />
+                <ScalarProperty Name="MaxMinutes" ColumnName="MaxMinutes" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Technology" ColumnName="Technology" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

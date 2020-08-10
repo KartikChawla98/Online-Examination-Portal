@@ -47,12 +47,24 @@ create table Questions
  CorrectOption int not null,
  )
 
+create table TestStructures
+ (
+ Technology nvarchar(60) not null,
+ Level int not null,
+ primary key (Technology, Level),
+ MaxMinutes int not null,
+ NumberOfQuestions int not null,
+ LastUpdatedBy int constraint AdminTestStructure references Admins(Id) not null,
+ UpdateDate DateTime not null
+ )
+
 create table Tests
  (
  Id int identity(1,1) primary key,
  UserId int constraint UserTest references Users(Id) not null,
  Technology nvarchar(60) not null,
  Level int not null,
+ constraint TestStructureTest foreign key (Technology, Level) references TestStructures (Technology, Level),
  StartTime DateTime,
  EndTime DateTime,
  Score int

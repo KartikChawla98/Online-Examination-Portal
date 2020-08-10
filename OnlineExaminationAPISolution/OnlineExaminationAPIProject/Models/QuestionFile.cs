@@ -11,7 +11,6 @@ namespace OnlineExaminationAPIProject.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
 
     [DataContract]
@@ -36,7 +35,6 @@ namespace OnlineExaminationAPIProject.Models
         public virtual Admin Admin { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Question> Questions { get; set; }
-
         public void SetProperties(int AdminId, string FileName)
         {
             this.UploadedBy = AdminId;

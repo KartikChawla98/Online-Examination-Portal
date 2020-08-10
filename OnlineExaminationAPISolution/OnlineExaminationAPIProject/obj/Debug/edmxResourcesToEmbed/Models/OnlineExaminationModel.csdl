@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_OnlineExaminationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="Binary" MaxLength="64" FixedLength="true" Nullable="false" />
+    <Property Name="FullName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Contact" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="QuestionFiles" Relationship="Self.AdminQuestionFile" FromRole="Admins" ToRole="QuestionFiles" />
+  </EntityType>
+  <EntityType Name="QuestionFile">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UploadedBy" Type="Int32" Nullable="false" />
+    <Property Name="UploadDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsCurrent" Type="Boolean" Nullable="false" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Admin" Relationship="Self.AdminQuestionFile" FromRole="QuestionFiles" ToRole="Admins" />
+    <NavigationProperty Name="Questions" Relationship="Self.QuestionFileQuestion" FromRole="QuestionFiles" ToRole="Questions" />
+  </EntityType>
+  <EntityType Name="Question">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FileId" Type="Int32" Nullable="false" />
+    <Property Name="Technology" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Level" Type="Int32" Nullable="false" />
+    <Property Name="QuestionString" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Option1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Option2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Option3" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Option4" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CorrectOption" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="QuestionFile" Relationship="Self.QuestionFileQuestion" FromRole="Questions" ToRole="QuestionFiles" />
+    <NavigationProperty Name="TestQuestions" Relationship="Self.QuestionTestQuestion" FromRole="Questions" ToRole="TestQuestions" />
+  </EntityType>
+  <EntityType Name="TestQuestion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TestId" Type="Int32" Nullable="false" />
+    <Property Name="QuestionId" Type="Int32" Nullable="false" />
+    <Property Name="UserAnswer" Type="Int32" />
+    <NavigationProperty Name="Question" Relationship="Self.QuestionTestQuestion" FromRole="TestQuestions" ToRole="Questions" />
+    <NavigationProperty Name="Test" Relationship="Self.TestTestQuestion" FromRole="TestQuestions" ToRole="Tests" />
+  </EntityType>
+  <EntityType Name="Test">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Technology" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Level" Type="Int32" Nullable="false" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="Score" Type="Int32" />
+    <NavigationProperty Name="TestQuestions" Relationship="Self.TestTestQuestion" FromRole="Tests" ToRole="TestQuestions" />
+    <NavigationProperty Name="User" Relationship="Self.UserTest" FromRole="Tests" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="Binary" MaxLength="64" FixedLength="true" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Contact" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="HighestQualification" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CompletionYear" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Tests" Relationship="Self.UserTest" FromRole="Users" ToRole="Tests" />
+  </EntityType>
+  <Association Name="AdminQuestionFile">
+    <End Role="Admins" Type="Self.Admin" Multiplicity="1" />
+    <End Role="QuestionFiles" Type="Self.QuestionFile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admins">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="QuestionFiles">
+        <PropertyRef Name="UploadedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="QuestionFileQuestion">
+    <End Role="QuestionFiles" Type="Self.QuestionFile" Multiplicity="1" />
+    <End Role="Questions" Type="Self.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QuestionFiles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Questions">
+        <PropertyRef Name="FileId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="QuestionTestQuestion">
+    <End Role="Questions" Type="Self.Question" Multiplicity="1" />
+    <End Role="TestQuestions" Type="Self.TestQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Questions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TestQuestions">
+        <PropertyRef Name="QuestionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TestTestQuestion">
+    <End Role="Tests" Type="Self.Test" Multiplicity="1" />
+    <End Role="TestQuestions" Type="Self.TestQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tests">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TestQuestions">
+        <PropertyRef Name="TestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserTest">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Tests" Type="Self.Test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tests">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="db_OnlineExaminationEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admins" EntityType="Self.Admin" />
+    <EntitySet Name="QuestionFiles" EntityType="Self.QuestionFile" />
+    <EntitySet Name="Questions" EntityType="Self.Question" />
+    <EntitySet Name="TestQuestions" EntityType="Self.TestQuestion" />
+    <EntitySet Name="Tests" EntityType="Self.Test" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="AdminQuestionFile" Association="Self.AdminQuestionFile">
+      <End Role="Admins" EntitySet="Admins" />
+      <End Role="QuestionFiles" EntitySet="QuestionFiles" />
+    </AssociationSet>
+    <AssociationSet Name="QuestionFileQuestion" Association="Self.QuestionFileQuestion">
+      <End Role="QuestionFiles" EntitySet="QuestionFiles" />
+      <End Role="Questions" EntitySet="Questions" />
+    </AssociationSet>
+    <AssociationSet Name="QuestionTestQuestion" Association="Self.QuestionTestQuestion">
+      <End Role="Questions" EntitySet="Questions" />
+      <End Role="TestQuestions" EntitySet="TestQuestions" />
+    </AssociationSet>
+    <AssociationSet Name="TestTestQuestion" Association="Self.TestTestQuestion">
+      <End Role="Tests" EntitySet="Tests" />
+      <End Role="TestQuestions" EntitySet="TestQuestions" />
+    </AssociationSet>
+    <AssociationSet Name="UserTest" Association="Self.UserTest">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Tests" EntitySet="Tests" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

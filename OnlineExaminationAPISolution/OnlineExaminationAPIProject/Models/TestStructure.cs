@@ -11,7 +11,9 @@ namespace OnlineExaminationAPIProject.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
+    [DataContract]
     public partial class TestStructure
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,16 +21,27 @@ namespace OnlineExaminationAPIProject.Models
         {
             this.Tests = new HashSet<Test>();
         }
-    
+        [DataMember]
         public string Technology { get; set; }
+        [DataMember]
         public int Level { get; set; }
+        [DataMember]
         public int MaxMinutes { get; set; }
+        [DataMember]
         public int NumberOfQuestions { get; set; }
+        [DataMember]
         public int LastUpdatedBy { get; set; }
+        [DataMember]
         public System.DateTime UpdateDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Test> Tests { get; set; }
         public virtual Admin Admin { get; set; }
+
+        public void SetProperties(int AdminId)
+        {
+            this.LastUpdatedBy = AdminId;
+            this.UpdateDate = System.DateTime.Now;
+        }
     }
 }

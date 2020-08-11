@@ -37,24 +37,31 @@ namespace OnlineExaminationAPIProject.Models
 
         public bool SetProperties(int FileId, CSVQuestion temp)
         {
-            this.FileId = FileId;
-            this.Technology = temp[0];
-            int value = 0;
-            int.TryParse(temp[7], out value);
-            if (value < 1 || value > 3)
+            try
+            {
+                this.FileId = FileId;
+                this.Technology = temp[0];
+                int value = 0;
+                int.TryParse(temp[1], out value);
+                if (value < 1 || value > 3)
+                    return false;
+                this.Level = value;
+                this.QuestionString = temp[2];
+                this.Option1 = temp[3];
+                this.Option2 = temp[4];
+                this.Option3 = temp[5];
+                this.Option4 = temp[6];
+                value = 0;
+                int.TryParse(temp[7], out value);
+                if (value < 1 || value > 4)
+                    return false;
+                this.CorrectOption = value;
+                return true;
+            }
+            catch
+            {
                 return false;
-            this.Level = value;
-            this.QuestionString = temp[2];
-            this.Option1 = temp[3];
-            this.Option2 = temp[4];
-            this.Option3 = temp[5];
-            this.Option4 = temp[6];
-            value = 0;
-            int.TryParse(temp[7], out value);
-            if (value < 1 || value > 4)
-                return false;
-            this.CorrectOption = value;
-            return true;
+            }
         }
     }
 }

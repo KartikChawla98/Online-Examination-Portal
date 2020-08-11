@@ -2,7 +2,8 @@ create database db_OnlineExamination
 use db_OnlineExamination
 
 create table Users
- (Id int identity(1,1) primary key,
+ (
+ Id int identity(1,1) primary key,
  FullName nvarchar(40) not null,
  Email nvarchar(60) unique not null,
  Password Binary(64) not null,
@@ -96,3 +97,4 @@ EXEC sp_MSForEachTable "DBCC CHECKIDENT ( '?', RESEED, 0)"
 
 select * from QuestionFiles
 select * from Questions
+select * from TestStructures

@@ -103,7 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\FilesController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TestStructuresController.cs" />
     <Compile Include="Models\Admin.cs">
       <DependentUpon>OnlineExaminationModel.tt</DependentUpon>
     </Compile>

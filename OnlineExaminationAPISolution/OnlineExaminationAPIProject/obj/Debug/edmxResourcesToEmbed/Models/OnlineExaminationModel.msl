@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="db_OnlineExaminationModelStoreContainer" CdmEntityContainer="db_OnlineExaminationEntities">
+  <EntityContainerMapping StorageEntityContainer="db_OnlineExaminationModelStoreContainer" CdmEntityContainer="Entities">
     <EntitySetMapping Name="Admins">
       <EntityTypeMapping TypeName="db_OnlineExaminationModel.Admin">
         <MappingFragment StoreEntitySet="Admins">
@@ -17,10 +17,9 @@
         <MappingFragment StoreEntitySet="QuestionFiles">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="UploadedBy" ColumnName="UploadedBy" />
-          <ScalarProperty Name="UploadDate" ColumnName="UploadDate" />
+          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
           <ScalarProperty Name="IsCurrent" ColumnName="IsCurrent" />
-          <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -43,8 +42,8 @@
     <EntitySetMapping Name="TestQuestions">
       <EntityTypeMapping TypeName="db_OnlineExaminationModel.TestQuestion">
         <MappingFragment StoreEntitySet="TestQuestions">
-          <ScalarProperty Name="TestId" ColumnName="TestId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TestId" ColumnName="TestId" />
           <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
           <ScalarProperty Name="UserAnswer" ColumnName="UserAnswer" />
         </MappingFragment>
@@ -55,11 +54,26 @@
         <MappingFragment StoreEntitySet="Tests">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="Technology" ColumnName="Technology" />
-          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="TestStructureId" ColumnName="TestStructureId" />
           <ScalarProperty Name="StartTime" ColumnName="StartTime" />
           <ScalarProperty Name="EndTime" ColumnName="EndTime" />
           <ScalarProperty Name="Score" ColumnName="Score" />
+          <ScalarProperty Name="Result" ColumnName="Result" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestStructures">
+      <EntityTypeMapping TypeName="db_OnlineExaminationModel.TestStructure">
+        <MappingFragment StoreEntitySet="TestStructures">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Technology" ColumnName="Technology" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="MaxMinutes" ColumnName="MaxMinutes" />
+          <ScalarProperty Name="NumberOfQuestions" ColumnName="NumberOfQuestions" />
+          <ScalarProperty Name="PassingScore" ColumnName="PassingScore" />
+          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+          <ScalarProperty Name="IsCurrent" ColumnName="IsCurrent" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -76,18 +90,6 @@
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="HighestQualification" ColumnName="HighestQualification" />
           <ScalarProperty Name="CompletionYear" ColumnName="CompletionYear" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TestStructures">
-      <EntityTypeMapping TypeName="db_OnlineExaminationModel.TestStructure">
-        <MappingFragment StoreEntitySet="TestStructures">
-          <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
-          <ScalarProperty Name="NumberOfQuestions" ColumnName="NumberOfQuestions" />
-          <ScalarProperty Name="MaxMinutes" ColumnName="MaxMinutes" />
-          <ScalarProperty Name="Level" ColumnName="Level" />
-          <ScalarProperty Name="Technology" ColumnName="Technology" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -28,10 +28,9 @@ create table QuestionFiles
  (
  Id int identity(1,1) primary key,
  Name nvarchar(100) not null,
- UploadedBy int constraint AdminQuestionFile references Admins(Id) not null,
- UploadDate DateTime not null,
- IsCurrent bit default 1 not null,
- DeleteDate DateTime
+ LastUpdatedBy int constraint AdminQuestionFile references Admins(Id) not null,
+ UpdateDate DateTime not null,
+ IsCurrent bit not null,
  )
  
 create table Questions
@@ -50,25 +49,26 @@ create table Questions
 
 create table TestStructures
  (
+ Id int identity(1,1) primary key,
  Technology nvarchar(60) not null,
  Level int not null,
- primary key (Technology, Level),
  MaxMinutes int not null,
  NumberOfQuestions int not null,
+ PassingScore int not null,
  LastUpdatedBy int constraint AdminTestStructure references Admins(Id) not null,
- UpdateDate DateTime not null
+ UpdateDate DateTime not null,
+ IsCurrent bit not null,
  )
 
 create table Tests
  (
  Id int identity(1,1) primary key,
  UserId int constraint UserTest references Users(Id) not null,
- Technology nvarchar(60) not null,
- Level int not null,
- constraint TestStructureTest foreign key (Technology, Level) references TestStructures (Technology, Level),
- StartTime DateTime,
- EndTime DateTime,
- Score int
+ TestStructureId int constraint TestStructureTest references TestStructures(Id) not null,
+ StartTime DateTime not null,
+ EndTime DateTime not null,
+ Score int,
+ Result bit
  /* PDF */
  )
 
@@ -79,6 +79,10 @@ create Table TestQuestions
  QuestionId int constraint QuestionTestQuestion references Questions(Id) not null,
  UserAnswer int
  )
+
+insert into Users values
+('Ganesh Dhingra', 'kartikchawla101@gmail.com', HASHBYTES('SHA2_512','123456'), '1998-08-17', '9582225801', 'Faridabad', 'Haryana', 'B.Tech.', 2020)
+select * from Users
 
 insert into Admins values 
 ('kartikchawla101@gmail.com', HASHBYTES('SHA2_512','123456'), 'Kartik Chawla', '9582225801')
@@ -98,3 +102,4 @@ EXEC sp_MSForEachTable "DBCC CHECKIDENT ( '?', RESEED, 0)"
 select * from QuestionFiles
 select * from Questions
 select * from TestStructures
+select * from Tests

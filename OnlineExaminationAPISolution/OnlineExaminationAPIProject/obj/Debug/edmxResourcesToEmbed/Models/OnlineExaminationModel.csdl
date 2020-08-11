@@ -10,7 +10,7 @@
     <Property Name="FullName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Contact" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="QuestionFiles" Relationship="Self.AdminQuestionFile" FromRole="Admins" ToRole="QuestionFiles" />
-    <NavigationProperty Name="TestStructures" Relationship="db_OnlineExaminationModel.AdminTestStructure" FromRole="Admin" ToRole="TestStructure" />
+    <NavigationProperty Name="TestStructures" Relationship="Self.AdminTestStructure" FromRole="Admins" ToRole="TestStructures" />
   </EntityType>
   <EntityType Name="QuestionFile">
     <Key>
@@ -18,10 +18,9 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="UploadedBy" Type="Int32" Nullable="false" />
-    <Property Name="UploadDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastUpdatedBy" Type="Int32" Nullable="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="IsCurrent" Type="Boolean" Nullable="false" />
-    <Property Name="DeleteDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Admin" Relationship="Self.AdminQuestionFile" FromRole="QuestionFiles" ToRole="Admins" />
     <NavigationProperty Name="Questions" Relationship="Self.QuestionFileQuestion" FromRole="QuestionFiles" ToRole="Questions" />
   </EntityType>
@@ -59,14 +58,30 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
-    <Property Name="Technology" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Level" Type="Int32" Nullable="false" />
+    <Property Name="TestStructureId" Type="Int32" Nullable="false" />
     <Property Name="StartTime" Type="DateTime" Precision="3" />
     <Property Name="EndTime" Type="DateTime" Precision="3" />
     <Property Name="Score" Type="Int32" />
+    <Property Name="Result" Type="Boolean" />
     <NavigationProperty Name="TestQuestions" Relationship="Self.TestTestQuestion" FromRole="Tests" ToRole="TestQuestions" />
+    <NavigationProperty Name="TestStructure" Relationship="Self.TestStructureTest" FromRole="Tests" ToRole="TestStructures" />
     <NavigationProperty Name="User" Relationship="Self.UserTest" FromRole="Tests" ToRole="Users" />
-    <NavigationProperty Name="TestStructure" Relationship="db_OnlineExaminationModel.TestStructureTest" FromRole="Test" ToRole="TestStructure" />
+  </EntityType>
+  <EntityType Name="TestStructure">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Technology" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Level" Type="Int32" Nullable="false" />
+    <Property Name="MaxMinutes" Type="Int32" Nullable="false" />
+    <Property Name="NumberOfQuestions" Type="Int32" Nullable="false" />
+    <Property Name="PassingScore" Type="Int32" Nullable="false" />
+    <Property Name="LastUpdatedBy" Type="Int32" Nullable="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsCurrent" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Admin" Relationship="Self.AdminTestStructure" FromRole="TestStructures" ToRole="Admins" />
+    <NavigationProperty Name="Tests" Relationship="Self.TestStructureTest" FromRole="TestStructures" ToRole="Tests" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -92,7 +107,19 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="QuestionFiles">
-        <PropertyRef Name="UploadedBy" />
+        <PropertyRef Name="LastUpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AdminTestStructure">
+    <End Role="Admins" Type="Self.Admin" Multiplicity="1" />
+    <End Role="TestStructures" Type="Self.TestStructure" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admins">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TestStructures">
+        <PropertyRef Name="LastUpdatedBy" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -132,6 +159,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="TestStructureTest">
+    <End Role="TestStructures" Type="Self.TestStructure" Multiplicity="1" />
+    <End Role="Tests" Type="Self.Test" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestStructures">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tests">
+        <PropertyRef Name="TestStructureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="UserTest">
     <End Role="Users" Type="Self.User" Multiplicity="1" />
     <End Role="Tests" Type="Self.Test" Multiplicity="*" />
@@ -144,16 +183,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="db_OnlineExaminationEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Admins" EntityType="Self.Admin" />
     <EntitySet Name="QuestionFiles" EntityType="Self.QuestionFile" />
     <EntitySet Name="Questions" EntityType="Self.Question" />
     <EntitySet Name="TestQuestions" EntityType="Self.TestQuestion" />
     <EntitySet Name="Tests" EntityType="Self.Test" />
+    <EntitySet Name="TestStructures" EntityType="Self.TestStructure" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <AssociationSet Name="AdminQuestionFile" Association="Self.AdminQuestionFile">
       <End Role="Admins" EntitySet="Admins" />
       <End Role="QuestionFiles" EntitySet="QuestionFiles" />
+    </AssociationSet>
+    <AssociationSet Name="AdminTestStructure" Association="Self.AdminTestStructure">
+      <End Role="Admins" EntitySet="Admins" />
+      <End Role="TestStructures" EntitySet="TestStructures" />
     </AssociationSet>
     <AssociationSet Name="QuestionFileQuestion" Association="Self.QuestionFileQuestion">
       <End Role="QuestionFiles" EntitySet="QuestionFiles" />
@@ -167,58 +211,13 @@
       <End Role="Tests" EntitySet="Tests" />
       <End Role="TestQuestions" EntitySet="TestQuestions" />
     </AssociationSet>
+    <AssociationSet Name="TestStructureTest" Association="Self.TestStructureTest">
+      <End Role="TestStructures" EntitySet="TestStructures" />
+      <End Role="Tests" EntitySet="Tests" />
+    </AssociationSet>
     <AssociationSet Name="UserTest" Association="Self.UserTest">
       <End Role="Users" EntitySet="Users" />
       <End Role="Tests" EntitySet="Tests" />
     </AssociationSet>
-    <EntitySet Name="TestStructures" EntityType="db_OnlineExaminationModel.TestStructure" />
-    <AssociationSet Name="TestStructureTest" Association="db_OnlineExaminationModel.TestStructureTest">
-      <End Role="TestStructure" EntitySet="TestStructures" />
-      <End Role="Test" EntitySet="Tests" />
-    </AssociationSet>
-    <AssociationSet Name="AdminTestStructure" Association="db_OnlineExaminationModel.AdminTestStructure">
-      <End Role="Admin" EntitySet="Admins" />
-      <End Role="TestStructure" EntitySet="TestStructures" />
-    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="TestStructure">
-    <Key>
-      <PropertyRef Name="Technology" />
-      <PropertyRef Name="Level" />
-    </Key>
-    <Property Name="Technology" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
-    <Property Name="Level" Type="Int32" Nullable="false" />
-    <Property Name="MaxMinutes" Type="Int32" Nullable="false" />
-    <Property Name="NumberOfQuestions" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Tests" Relationship="db_OnlineExaminationModel.TestStructureTest" FromRole="TestStructure" ToRole="Test" />
-    <Property Name="LastUpdatedBy" Type="Int32" Nullable="false" />
-    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Admin" Relationship="db_OnlineExaminationModel.AdminTestStructure" FromRole="TestStructure" ToRole="Admin" />
-  </EntityType>
-  <Association Name="TestStructureTest">
-    <End Type="db_OnlineExaminationModel.TestStructure" Role="TestStructure" Multiplicity="1" />
-    <End Type="db_OnlineExaminationModel.Test" Role="Test" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TestStructure">
-        <PropertyRef Name="Technology" />
-        <PropertyRef Name="Level" />
-      </Principal>
-      <Dependent Role="Test">
-        <PropertyRef Name="Technology" />
-        <PropertyRef Name="Level" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="AdminTestStructure">
-    <End Type="db_OnlineExaminationModel.Admin" Role="Admin" Multiplicity="1" />
-    <End Type="db_OnlineExaminationModel.TestStructure" Role="TestStructure" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Admin">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="TestStructure">
-        <PropertyRef Name="LastUpdatedBy" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

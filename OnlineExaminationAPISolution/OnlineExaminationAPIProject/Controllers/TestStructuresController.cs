@@ -10,6 +10,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using OnlineExaminationAPIProject.Models;
 
+//Admin data
+//Model state (Level)
 namespace OnlineExaminationAPIProject.Controllers
 {
     public class TestStructuresController : ApiController
@@ -19,14 +21,21 @@ namespace OnlineExaminationAPIProject.Controllers
         [HttpGet]
         public List<TestStructure> GetTestStructures()
         {
-            return db.TestStructures.ToList();
+            return db.TestStructures.Where(ts => ts.IsCurrent == true).ToList();
         }
+
         [HttpPut]
         [ResponseType(typeof(void))]
         public IHttpActionResult UpdateTestStructure(TestStructure testStructure)
         {
+            
+            TestStructure oldData = db.TestStructures.Find(testStructure.Id);
+            if (oldData == null || !oldData.IsCurrent)
+            {
+                return NotFound();
+            }
             //Add admin data
-            testStructure.SetProperties(1);
+            testStructure.SetProperties(AdminId: 1);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -38,7 +47,7 @@ namespace OnlineExaminationAPIProject.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TestStructureExists(testStructure.Technology, testStructure.Level))
+                if (!TestStructureExists(testStructure.Id))
                 {
                     return NotFound();
                 }
@@ -47,14 +56,14 @@ namespace OnlineExaminationAPIProject.Controllers
                     throw;
                 }
             }
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(testStructure);
         }
         [HttpPost]
         [ResponseType(typeof(TestStructure))]
         public IHttpActionResult AddTestStructure(TestStructure testStructure)
         {
             //Add admin data
-            testStructure.SetProperties(1);
+            testStructure.SetProperties(AdminId: 1);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -66,7 +75,7 @@ namespace OnlineExaminationAPIProject.Controllers
             }
             catch (DbUpdateException)
             {
-                if (TestStructureExists(testStructure.Technology, testStructure.Level))
+                if (TestStructureExists(testStructure.Id))
                 {
                     return Conflict();
                 }
@@ -75,19 +84,20 @@ namespace OnlineExaminationAPIProject.Controllers
                     throw;
                 }
             }
-            return CreatedAtRoute("DefaultApi", new { id = testStructure.Technology + ":" + testStructure.Level }, testStructure);
+            return CreatedAtRoute("DefaultApi", new { id = testStructure.Id }, testStructure);
         }
         [HttpDelete]
         [ResponseType(typeof(TestStructure))]
-        public IHttpActionResult DeleteTestStructure(string id)
+        public IHttpActionResult DeleteTestStructure(int id)
         {
-            string[] ids = id.Split(';');
-            TestStructure testStructure = db.TestStructures.Find(ids[0], Convert.ToInt32(ids[1]));
-            if (testStructure == null)
+            TestStructure testStructure = db.TestStructures.Find(id);
+                                           
+            if (testStructure == null || !testStructure.IsCurrent)
             {
                 return NotFound();
             }
-            db.TestStructures.Remove(testStructure);
+            //Add admin data
+            testStructure.SetProperties(AdminId: 1, IsCurrent: false);
             db.SaveChanges();
             return Ok(testStructure);
         }
@@ -101,9 +111,9 @@ namespace OnlineExaminationAPIProject.Controllers
             base.Dispose(disposing);
         }
 
-        private bool TestStructureExists(string Technology, int Level)
+        private bool TestStructureExists(int id)
         {
-            return db.TestStructures.Count(t => t.Technology == Technology && t.Level == Level) > 0;
+            return db.TestStructures.Count(t => t.Id == id) > 0;
         }
     }
 }

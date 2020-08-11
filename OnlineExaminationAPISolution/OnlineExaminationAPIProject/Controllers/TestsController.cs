@@ -12,17 +12,17 @@ using OnlineExaminationAPIProject.Models;
 
 namespace OnlineExaminationAPIProject.Controllers
 {
-    public class TestController : ApiController
+    public class TestsController : ApiController
     {
         private db_OnlineExaminationEntities db = new db_OnlineExaminationEntities();
 
-        // GET: api/Test
+        // GET: api/Tests
         public IQueryable<Test> GetTests()
         {
             return db.Tests;
         }
 
-        // GET: api/Test/5
+        // GET: api/Tests/5
         [ResponseType(typeof(Test))]
         public IHttpActionResult GetTest(int id)
         {
@@ -35,7 +35,7 @@ namespace OnlineExaminationAPIProject.Controllers
             return Ok(test);
         }
 
-        // PUT: api/Test/5
+        // PUT: api/Tests/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutTest(int id, Test test)
         {
@@ -69,23 +69,24 @@ namespace OnlineExaminationAPIProject.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-
-        // POST: api/Test
+        [HttpPost]
         [ResponseType(typeof(Test))]
-        public IHttpActionResult PostTest(Test test)
+        public IHttpActionResult AddTest(int id)
         {
+            Test test = new Test();
+            //Add user data
+            test.SetProperties(UserId: 1, TestStructureId: id);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
             db.Tests.Add(test);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = test.Id }, test);
         }
 
-        // DELETE: api/Test/5
+        // DELETE: api/Tests/5
         [ResponseType(typeof(Test))]
         public IHttpActionResult DeleteTest(int id)
         {

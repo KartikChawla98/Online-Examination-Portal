@@ -16,10 +16,9 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="UploadedBy" Type="int" Nullable="false" />
-    <Property Name="UploadDate" Type="datetime" Nullable="false" />
+    <Property Name="LastUpdatedBy" Type="int" Nullable="false" />
+    <Property Name="UpdateDate" Type="datetime" Nullable="false" />
     <Property Name="IsCurrent" Type="bit" Nullable="false" />
-    <Property Name="DeleteDate" Type="datetime" />
   </EntityType>
   <EntityType Name="Questions">
     <Key>
@@ -51,23 +50,25 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
-    <Property Name="Technology" Type="nvarchar" MaxLength="60" Nullable="false" />
-    <Property Name="Level" Type="int" Nullable="false" />
+    <Property Name="TestStructureId" Type="int" Nullable="false" />
     <Property Name="StartTime" Type="datetime" />
     <Property Name="EndTime" Type="datetime" />
     <Property Name="Score" Type="int" />
+    <Property Name="Result" Type="bit" />
   </EntityType>
   <EntityType Name="TestStructures">
     <Key>
-      <PropertyRef Name="Technology" />
-      <PropertyRef Name="Level" />
+      <PropertyRef Name="Id" />
     </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Technology" Type="nvarchar" MaxLength="60" Nullable="false" />
     <Property Name="Level" Type="int" Nullable="false" />
     <Property Name="MaxMinutes" Type="int" Nullable="false" />
     <Property Name="NumberOfQuestions" Type="int" Nullable="false" />
+    <Property Name="PassingScore" Type="int" Nullable="false" />
     <Property Name="LastUpdatedBy" Type="int" Nullable="false" />
     <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+    <Property Name="IsCurrent" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -92,7 +93,7 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="QuestionFiles">
-        <PropertyRef Name="UploadedBy" />
+        <PropertyRef Name="LastUpdatedBy" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -137,12 +138,10 @@
     <End Role="Tests" Type="Self.Tests" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="TestStructures">
-        <PropertyRef Name="Technology" />
-        <PropertyRef Name="Level" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Tests">
-        <PropertyRef Name="Technology" />
-        <PropertyRef Name="Level" />
+        <PropertyRef Name="TestStructureId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

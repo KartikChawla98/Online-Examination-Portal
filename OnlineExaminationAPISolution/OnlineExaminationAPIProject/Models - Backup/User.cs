@@ -11,34 +11,27 @@ namespace OnlineExaminationAPIProject.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
-
-    [DataContract]
-    public partial class QuestionFile
+    
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public QuestionFile()
+        public User()
         {
-            this.Questions = new HashSet<Question>();
+            this.Tests = new HashSet<Test>();
         }
-        [DataMember]
+    
         public int Id { get; set; }
-        [DataMember]
-        public string Name { get; set; }
-        public int LastUpdatedBy { get; set; }
-        public System.DateTime UpdateDate { get; set; }
-        public bool IsCurrent { get; set; }
-
-        public virtual Admin Admin { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public byte[] Password { get; set; }
+        public System.DateTime DOB { get; set; }
+        public string Contact { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string HighestQualification { get; set; }
+        public int CompletionYear { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Question> Questions { get; set; }
-
-        public void SetProperties(int AdminId, string FileName = "", bool IsCurrent = true)
-        {
-            this.Name = this.Name ?? FileName;
-            this.IsCurrent = IsCurrent;
-            this.LastUpdatedBy = AdminId;
-            this.UpdateDate = System.DateTime.Now;
-        }
+        public virtual ICollection<Test> Tests { get; set; }
     }
 }

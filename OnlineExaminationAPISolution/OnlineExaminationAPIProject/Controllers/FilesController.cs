@@ -39,7 +39,7 @@ namespace OnlineExaminationAPIProject.Controllers
             }
             QuestionFile file = new QuestionFile();
             //Add admin data
-            file.SetProperties(1, CSV.FileName);
+            file.SetProperties(AdminId: 1, FileName: CSV.FileName);
             db.QuestionFiles.Add(file);
             db.SaveChanges();
             int count = 0;
@@ -74,8 +74,8 @@ namespace OnlineExaminationAPIProject.Controllers
             {
                 return NotFound();
             }
-            file.IsCurrent = false;
-            file.DeleteDate = System.DateTime.Now;
+            //Add admin data
+            file.SetProperties(AdminId: 1, IsCurrent: false);
             db.SaveChanges();
             return Ok(file);
         }

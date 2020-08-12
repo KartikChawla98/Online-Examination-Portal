@@ -28,7 +28,6 @@ namespace OnlineExaminationAPIProject.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult UpdateTestStructure(TestStructure testStructure)
         {
-            
             TestStructure oldData = db.TestStructures.Find(testStructure.Id);
             if (oldData == null || !oldData.IsCurrent)
             {
@@ -62,6 +61,10 @@ namespace OnlineExaminationAPIProject.Controllers
         [ResponseType(typeof(TestStructure))]
         public IHttpActionResult AddTestStructure(TestStructure testStructure)
         {
+            if (TestStructureExists(testStructure.Technology, testStructure.Level))
+            {
+                return Conflict();
+            }
             //Add admin data
             testStructure.SetProperties(AdminId: 1);
             if (!ModelState.IsValid)
@@ -90,8 +93,7 @@ namespace OnlineExaminationAPIProject.Controllers
         [ResponseType(typeof(TestStructure))]
         public IHttpActionResult DeleteTestStructure(int id)
         {
-            TestStructure testStructure = db.TestStructures.Find(id);
-                                           
+            TestStructure testStructure = db.TestStructures.Find(id);                              
             if (testStructure == null || !testStructure.IsCurrent)
             {
                 return NotFound();
@@ -114,6 +116,10 @@ namespace OnlineExaminationAPIProject.Controllers
         private bool TestStructureExists(int id)
         {
             return db.TestStructures.Count(t => t.Id == id) > 0;
+        }
+        private bool TestStructureExists(string Technology, int Level)
+        {
+            return db.TestStructures.Count(t => t.Technology == Technology && t.Level == Level && t.IsCurrent == true) > 0;
         }
     }
 }

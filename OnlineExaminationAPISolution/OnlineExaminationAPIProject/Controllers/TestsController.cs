@@ -78,7 +78,7 @@ namespace OnlineExaminationAPIProject.Controllers
             test.SetProperties(UserId: 1, TestStructureId: id);
             db.Tests.Add(test);
             db.SaveChanges();
-            TestStructure testStructure = db.TestStructures.Find(test.Id);
+            TestStructure testStructure = db.TestStructures.Find(id);
             Random rng = new Random();
             List<Question> questions = db.Questions.Where(q => q.Technology == testStructure.Technology &&
                                                          q.Level == testStructure.Level &&
@@ -93,7 +93,7 @@ namespace OnlineExaminationAPIProject.Controllers
             test.StartTime = System.DateTime.Now;
             test.EndTime = test.StartTime.Value.AddMinutes(testStructure.MaxMinutes);
             db.SaveChanges();
-            return CreatedAtRoute("DefaultApi", new { id = test.Id }, db.TestQuestions.Where(tq => tq.Id == test.Id).ToList());
+            return CreatedAtRoute("DefaultApi", new { id = test.Id }, db.TestQuestions.Where(tq => tq.TestId == test.Id).ToList());
         }
 
         // DELETE: api/Tests/5

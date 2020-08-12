@@ -3,3 +3,7 @@ Maths,1,1 + 1,1,2,3,4,2
 Maths,1,2 + 2,1,2,3,4,4
 Maths,2,"Find the value of x, where 2 + x = 8",2,4,6,8,3
 English,1,We dived _ the pool,into,in,over,through,1
+Maths,1,3 + 3,2,4,6,8,3
+Maths,1,2 - 2,0,2,4,6,1
+Maths,1,5 * 2,5,10,15,20,2
+Maths ,1,1 * 10,3,5,7,10,4

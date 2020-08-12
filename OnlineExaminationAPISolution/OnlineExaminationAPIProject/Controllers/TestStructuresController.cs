@@ -18,10 +18,24 @@ namespace OnlineExaminationAPIProject.Controllers
     {
         private db_OnlineExaminationEntities db = new db_OnlineExaminationEntities();
 
+        //Admin
         [HttpGet]
-        public List<TestStructure> GetTestStructures()
+        public List<TestStructure> GetAllTestStructures()
         {
+            //If Admin
             return db.TestStructures.Where(ts => ts.IsCurrent == true).ToList();
+            //If User
+        }
+        //User
+        [HttpGet]
+        public List<TestStructure> GetTestOptions(int id)
+        {
+            List<TestStructure> testOptions = db.TestStructures.Where(ts => ts.IsCurrent == true).ToList();
+            List<Test> userTests = db.Tests.Where(t => t.UserId == id && t.TestStructure.IsCurrent == true &&
+                                                 t.Result == true).ToList();
+            foreach (Test test in userTests)
+               testOptions.Remove(test.TestStructure);
+            return testOptions;
         }
 
         [HttpPut]
@@ -33,29 +47,32 @@ namespace OnlineExaminationAPIProject.Controllers
             {
                 return NotFound();
             }
-            //Add admin data
-            testStructure.SetProperties(AdminId: 1);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            db.Entry(testStructure).State = EntityState.Modified;
-            try
+            //Add admin data
+            if (testStructure.SetProperties(AdminId: 1))
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TestStructureExists(testStructure.Id))
+                db.Entry(testStructure).State = EntityState.Modified;
+                try
                 {
-                    return NotFound();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!TestStructureExists(testStructure.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+                return Ok(testStructure);
             }
-            return Ok(testStructure);
+            return BadRequest();
         }
         [HttpPost]
         [ResponseType(typeof(TestStructure))]
@@ -65,29 +82,32 @@ namespace OnlineExaminationAPIProject.Controllers
             {
                 return Conflict();
             }
-            //Add admin data
-            testStructure.SetProperties(AdminId: 1);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            db.TestStructures.Add(testStructure);
-            try
+            //Add admin data
+            if (testStructure.SetProperties(AdminId: 1))
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (TestStructureExists(testStructure.Id))
+                db.TestStructures.Add(testStructure);
+                try
                 {
-                    return Conflict();
+                    db.SaveChanges();
                 }
-                else
+                catch (DbUpdateException)
                 {
-                    throw;
+                    if (TestStructureExists(testStructure.Id))
+                    {
+                        return Conflict();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+                return CreatedAtRoute("DefaultApi", new { id = testStructure.Id }, testStructure);
             }
-            return CreatedAtRoute("DefaultApi", new { id = testStructure.Id }, testStructure);
+            return BadRequest();
         }
         [HttpDelete]
         [ResponseType(typeof(TestStructure))]
@@ -99,7 +119,7 @@ namespace OnlineExaminationAPIProject.Controllers
                 return NotFound();
             }
             //Add admin data
-            testStructure.SetProperties(AdminId: 1, IsCurrent: false);
+            testStructure.SetProperties(AdminId: 1, IsCurrent: false, SetNumberOfQuestions: false);
             db.SaveChanges();
             return Ok(testStructure);
         }

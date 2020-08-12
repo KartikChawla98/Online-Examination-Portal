@@ -16,6 +16,7 @@ namespace OnlineExaminationAPIProject.Models
     [DataContract]
     public partial class TestQuestion
     {
+        [DataMember]
         public int Id { get; set; }
         public int TestId { get; set; }
         public int QuestionId { get; set; }

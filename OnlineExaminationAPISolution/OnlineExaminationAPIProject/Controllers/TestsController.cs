@@ -31,42 +31,34 @@ namespace OnlineExaminationAPIProject.Controllers
             {
                 return NotFound();
             }
-
             return Ok(test);
         }
 
-        // PUT: api/Tests/5
+        [HttpPut]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTest(int id, Test test)
+        public IHttpActionResult EndTest(int id, List<TestQuestion> testQuestions)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != test.Id)
+            if (!TestExists(id))
+                return NotFound();
+            Test test = db.Tests.Find(id);
+            int passingScore = test.TestStructure.PassingScore;
+            int totalScore = 0;
+            foreach (TestQuestion testQuestion in testQuestions)
             {
-                return BadRequest();
-            }
-
-            db.Entry(test).State = EntityState.Modified;
-
-            try
-            {
+                TestQuestion dbTestQuestion = db.TestQuestions.Find(testQuestion.Id);
+                dbTestQuestion.UserAnswer = testQuestion.UserAnswer;
                 db.SaveChanges();
+                if (dbTestQuestion.Question.CorrectOption == dbTestQuestion.UserAnswer)
+                    totalScore++;
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TestExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            test.Score = totalScore;
+            test.Result = totalScore >= passingScore ? true : false;
+            test.EndTime = System.DateTime.Now < test.EndTime ? System.DateTime.Now : test.EndTime;
+            db.SaveChanges();
             return StatusCode(HttpStatusCode.NoContent);
         }
         [HttpPost]
@@ -123,7 +115,7 @@ namespace OnlineExaminationAPIProject.Controllers
 
         private bool TestExists(int id)
         {
-            return db.Tests.Count(e => e.Id == id) > 0;
+            return db.Tests.Count(t => t.Id == id && t.EndTime >= System.DateTime.Now) > 0;
         }
     }
 }

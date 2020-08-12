@@ -42,16 +42,18 @@ namespace OnlineExaminationAPIProject.Controllers
             file.SetProperties(AdminId: 1, FileName: CSV.FileName);
             db.QuestionFiles.Add(file);
             db.SaveChanges();
-            int count = 0;
+            bool headersRow = true;
             CSVQuestion temp;
             using (CSVReader reader = new CSVReader(CSV.InputStream))
             {
                 CSVQuestion row = new CSVQuestion();
                 while (reader.ReadRow(row))
                 {
-                    count++;
-                    if (count == 1)
+                    if (headersRow)
+                    {
+                        headersRow = false;
                         continue;
+                    }
                     temp = new CSVQuestion();
                     temp.AddRange(row);
                     Question question = new Question();

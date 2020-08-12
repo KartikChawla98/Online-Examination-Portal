@@ -11,7 +11,9 @@ namespace OnlineExaminationAPIProject.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
+    [DataContract]
     public partial class Question
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,10 +26,15 @@ namespace OnlineExaminationAPIProject.Models
         public int FileId { get; set; }
         public string Technology { get; set; }
         public int Level { get; set; }
+        [DataMember]
         public string QuestionString { get; set; }
+        [DataMember]
         public string Option1 { get; set; }
+        [DataMember]
         public string Option2 { get; set; }
+        [DataMember]
         public string Option3 { get; set; }
+        [DataMember]
         public string Option4 { get; set; }
         public int CorrectOption { get; set; }
     

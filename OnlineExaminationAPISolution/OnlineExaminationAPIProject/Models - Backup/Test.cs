@@ -32,7 +32,7 @@ namespace OnlineExaminationAPIProject.Models
         [DataMember]
         public Nullable<int> Score { get; set; }
         public Nullable<bool> Result { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }
         public virtual TestStructure TestStructure { get; set; }

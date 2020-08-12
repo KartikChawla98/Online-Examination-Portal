@@ -65,8 +65,8 @@ create table Tests
  Id int identity(1,1) primary key,
  UserId int constraint UserTest references Users(Id) not null,
  TestStructureId int constraint TestStructureTest references TestStructures(Id) not null,
- StartTime DateTime not null,
- EndTime DateTime not null,
+ StartTime DateTime,
+ EndTime DateTime,
  Score int,
  Result bit
  /* PDF */
@@ -103,3 +103,4 @@ select * from QuestionFiles
 select * from Questions
 select * from TestStructures
 select * from Tests
+select * from TestQuestions

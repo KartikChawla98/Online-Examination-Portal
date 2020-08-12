@@ -11,15 +11,24 @@ namespace OnlineExaminationAPIProject.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
+    [DataContract]
     public partial class TestQuestion
     {
         public int Id { get; set; }
         public int TestId { get; set; }
         public int QuestionId { get; set; }
+        [DataMember]
         public Nullable<int> UserAnswer { get; set; }
-    
+        [DataMember]
         public virtual Question Question { get; set; }
         public virtual Test Test { get; set; }
+
+        public void SetProperties(int TestId, int QuestionId)
+        {
+            this.TestId = TestId;
+            this.QuestionId = QuestionId;
+        }
     }
 }

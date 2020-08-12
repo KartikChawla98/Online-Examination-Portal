@@ -70,20 +70,30 @@ namespace OnlineExaminationAPIProject.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
         [HttpPost]
-        [ResponseType(typeof(Test))]
+        [ResponseType(typeof(List<TestQuestion>))]
         public IHttpActionResult AddTest(int id)
         {
             Test test = new Test();
             //Add user data
             test.SetProperties(UserId: 1, TestStructureId: id);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             db.Tests.Add(test);
             db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = test.Id }, test);
+            TestStructure testStructure = db.TestStructures.Find(test.Id);
+            Random rng = new Random();
+            List<Question> questions = db.Questions.Where(q => q.Technology == testStructure.Technology &&
+                                                         q.Level == testStructure.Level &&
+                                                         q.QuestionFile.IsCurrent == true).ToList();
+            for (int i = 0; i < testStructure.NumberOfQuestions; i++)
+            {
+                TestQuestion testQuestion = new TestQuestion();
+                testQuestion.SetProperties(TestId: test.Id, QuestionId: questions[rng.Next(0, questions.Count)].Id);
+                db.TestQuestions.Add(testQuestion);
+                db.SaveChanges();
+            }
+            test.StartTime = System.DateTime.Now;
+            test.EndTime = test.StartTime.Value.AddMinutes(testStructure.MaxMinutes);
+            db.SaveChanges();
+            return CreatedAtRoute("DefaultApi", new { id = test.Id }, db.TestQuestions.Where(tq => tq.Id == test.Id).ToList());
         }
 
         // DELETE: api/Tests/5

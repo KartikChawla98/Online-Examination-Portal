@@ -14,6 +14,10 @@ import { NewExamComponent } from './new-exam/new-exam.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { ReportComponent } from './report/report.component';
+import { AddAdminComponent } from './add-admin/add-admin.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminRegisterComponent } from './admin-register/admin-register.component';
+import { AdminReportComponent } from './admin-report/admin-report.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,11 @@ import { ReportComponent } from './report/report.component';
     NewExamComponent,
     ResetPasswordComponent,
     UserLoginComponent,
-    ReportComponent
+    ReportComponent,
+    AddAdminComponent,
+    AdminLoginComponent,
+    AdminRegisterComponent,
+    AdminReportComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +53,11 @@ import { ReportComponent } from './report/report.component';
       {path: 'candidate-report' ,  component : CandidateReportComponent},
       {path: 'about-us' ,  component : AboutUsComponent},
       {path: 'report' ,  component : ReportComponent},
+      {path: 'add-admin' ,  component : AddAdminComponent},
+      {path: 'admin-login' ,  component : AdminLoginComponent},
+      {path: 'admin-register' ,  component : AdminRegisterComponent},
       {path: '*' ,  component : HomePageComponent},
+      {path: 'admin-report' ,  component : AdminReportComponent},
 
     ])
   ],

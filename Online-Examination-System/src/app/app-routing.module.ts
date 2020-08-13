@@ -1,3 +1,7 @@
+import { AdminReportComponent } from './admin-report/admin-report.component';
+import { AdminRegisterComponent } from './admin-register/admin-register.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AddAdminComponent } from './add-admin/add-admin.component';
 import { ReportComponent } from './report/report.component';
 import { InstructionsComponent } from './instructions/instructions.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -10,7 +14,6 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { RegisterComponent } from './register/register.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { NgModule } from '@angular/core';
-
 import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {path: 'home-page' ,  component : HomePageComponent},
@@ -24,6 +27,10 @@ const routes: Routes = [
       {path: 'candidate-report' ,  component : CandidateReportComponent},
       {path: 'about-us' ,  component : AboutUsComponent},
       {path: 'report' ,  component : ReportComponent},
+      {path: 'add-admin' ,  component : AddAdminComponent},
+      {path: 'admin-login' ,  component : AdminLoginComponent},
+      {path: 'admin-register' ,  component : AdminRegisterComponent},
+      {path: 'admin-report' ,  component : AdminReportComponent},
 ];
 
 @NgModule({

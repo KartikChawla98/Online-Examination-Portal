@@ -11,9 +11,11 @@ using System.Web.Http;
 using System.Web;
 using System.Web.Http.Description;
 using OnlineExaminationAPIProject.Models;
+using System.Web.Http.Cors;
 
 namespace OnlineExaminationAPIProject.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class FilesController : ApiController
     {
         private db_OnlineExaminationEntities db = new db_OnlineExaminationEntities();

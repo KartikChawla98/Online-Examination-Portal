@@ -1,0 +1,40 @@
+Technology,Level,Question,Option 1,Option 2,Option 3,Option 4,Correct Option
+Java,1,Which of the following is a type of polymorphism in Java?,Compile time polymorphism, Execution time polymorphism,Multiple polymorphism, Multilevel polymorphism,1
+Java,1,Which concept of Java is achieved by combining methods and attribute into a class?,Encapsulation,Inheritance,Polymorphism,Abstraction,1
+Java,1,"Which component is used to compile, debug and execute java program?",JVM,JDK,JRE,JIT,2
+Java,1, Which statement is true about java?, Platform independent programming language,Platform dependent programming language, Code dependent programming language,Sequence dependent programming language,1
+Java,1,What is use of interpreter?,They convert bytecode to machine language code,They read high level code and execute them,They are intermediated between JIT and JVM,It is a synonym for JIT,2
+Java,1,What is the process of defining more than one method in a class differentiated by method signature?, Function overriding,Function doubling,Function overloading, None of the mentioned,3
+Java,1,Which keyword is used by the method to refer to the object that invoked it?, import,catch,abstract,this,4
+Java,1,Which operator is used by Java run time implementations to free the memory of an object when it is no longer needed?,delete, free,new, none of the mentioned,4
+Java,1, Which function is used to perform some action when the object is to be destroyed?,delete(),main(),finalize(),none of the mentioned,3
+Java,1,What is the return type of Constructors?,int,float,void, none of the mentioned,4
+Java,1,Which of these method of String class is used to obtain character at specified index?,char(), Charat(),charat(), charAt(),4
+Java,1,. Which of these keywords is used to refer to member of base class from a subclass?,upper, super, this,none of the mentioned,2
+Java,1, Which of the following statements are incorrect?,Every string is an object of class String,"Java defines a peer class of String, called StringBuffer, which allows string to be altered",Strings in java are mutable,String is a class,3
+Java,1,Where is a new object allocated memory?,Young space,Old space,Young or Old space depending on space availability, JVM,1
+Java,2, What is -Xms and -Xmx while starting jvm?,Initial; Maximum memory,Maximum; Initial memory,Maximum memory, Initial memory,1
+Java,2,How to get prints of shared object memory maps or heap memory maps for a given process?,memorypath,memorymap,jmap, jvmmap,3
+Java,2,Which of the below is not a memory leak solution?, JVM parameter tuning, Process restart,GC parameter tuning,Code changes,2
+Java,2,Which of the below is not a Java Profiler?,JVM,JConsole,JProfiler,Eclipse Profiler,1
+Java,2,Which class allows parsing of command line arguments?,Args,Command Line, Input, JCommander,4
+Java,2,Which annotation is used to represent command line input and assigned to correct data type?,@Variable,@Input,@Command Line,@Parameter,4
+Java,2, Which of these data types is used to store command line arguments?,Stack,String,Integer,Array,2
+Java,2, How many arguments can be passed to main()?,System Dependent, Only 1, Infinite, None of the mentioned,3
+Java,2,Which of these data types is used by operating system to manage the Recursion in Java?, Array,Stack,Queue,Tree,2
+Java,2, Which of these packages contains the exception Stack Overflow in Java?,java.lang,java.util,java.io,java.system,1
+Java,2,Which of these method of Object class can clone an object?, Objectcopy(), Object clone(),copy(),clone(),2
+Java,2,Which of these keywords cannot be used for a class which has been declared final?,abstract,extends,abstract and extends,none of the mentioned,1
+Java,2, Which of these class relies upon its subclasses for complete implementation of its methods?,abstract class,ArrayList class,Object class,None of the mentioned,1
+Java,2, A class member declared protected becomes a member of subclass of which type?, public member,private member,protected member,static member,2
+Java,2," Using which of the following, multiple inheritance in Java can be implemented?",Multithreading, Interfaces,Private methods,Protected methods,2
+Java,3, Which of these interface extends DataOutput interface?, ObjectOutput,ObjectInput,Externalization,Serializable,1
+Java,3,Which of these is method of ObjectOutput interface used to write the object to input or output stream as required?, Write(), StreamWrite(),writeObject(),write(),3
+Java,3, Which of these methods of httpd class is used to read data from the stream?,getData(),GetResponse(),getStream(),getRawRequest(),4
+Java,3,Which of these methods are used to find a URL from the cache of httpd?, findFromCache(),findfromCache(),serveFromCache(),getFromCache(),3
+Java,3,Which of these class is used to create servers that listen for either local or remote client programs?,ServerSockets,MimeHeader,httpServer,HttpResponse,1
+Java,3,Which of these methods is used to make raw MIME formatted string?,toString(), getString(),parseString(),parse(),4
+Java,3,Which of these interface declares core method that all collections will have?, EventListner,set,Comparator, Collection,4
+Java,3,Which of these is static variable defined in Collections?,EMPTY_LIST,EMPTY_SET,EMPTY_MAP,All of the mentioned,4
+Java,3,Which of these is a class which uses String as a key to store the value in object?, HashMap,Hashtable, Enumeration,Map,4
+Java,3,Which of these methods is used to retrieve the elements in properties object at specific location?,getProperty(),ElementAt(),Elementat(),get(),1

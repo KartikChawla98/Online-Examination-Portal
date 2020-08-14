@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using OnlineExaminationAPIProject.Models;
 
@@ -14,6 +15,7 @@ using OnlineExaminationAPIProject.Models;
 //Model state (Level)
 namespace OnlineExaminationAPIProject.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class TestStructuresController : ApiController
     {
         private db_OnlineExaminationEntities db = new db_OnlineExaminationEntities();

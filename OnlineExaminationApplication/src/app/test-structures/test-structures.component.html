@@ -1,0 +1,36 @@
+<!-- <div>
+    <h1>Add New Test Pattern</h1><br/>
+    <form (ngSubmit)="submitStructure(questionStructure)">
+        <input type="structure" #questionStructure class="form-control"/><br/>
+        <button type="submit" class="btn btn-success">Add Structure</button><br/>
+    </form>
+    <p *ngIf="newStructure">
+        <br/>
+        Structure Name: {{newStructure.Name}}<br/>
+        Upload Date: {{newStructure.UploadDate}}<br/>
+        Structure Added!<br/>
+    </p>
+    <p *ngIf="errorAddStructure">
+        <br/>
+        {{errorAddStructure}}<br/>
+    </p>
+</div> -->
+<br/><hr/>
+<div *ngIf="structures">
+    <h1>Modify Test Patterns</h1><br/>
+    <p>
+        <select [(ngModel)]="selectStructure" (change)="setProperties()">
+            <option *ngFor="let structure of structures" [ngValue]="structure">Name: {{structure.Name}}, Upload Date: {{structure.UploadDate}}</option>
+        </select>
+    </p>
+    <p *ngIf="selectStructure.Id">
+        <br/>
+        Structure Name: {{selectStructure.Name}}<br/>
+        Upload Date: {{selectStructure.UploadDate}}<br/><br/>
+        <button (click)="removeStructure()" class="btn btn-danger">Remove Structure</button><br/> 
+    </p>
+    <p *ngIf="deletedStructure">
+        <br/>
+        Structure: {{deletedStructure.Name}} Deleted!
+    </p>
+</div>

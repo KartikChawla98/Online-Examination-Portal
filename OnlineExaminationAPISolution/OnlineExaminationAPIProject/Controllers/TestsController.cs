@@ -7,11 +7,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using OnlineExaminationAPIProject.Models;
 
 namespace OnlineExaminationAPIProject.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class TestsController : ApiController
     {
         private db_OnlineExaminationEntities db = new db_OnlineExaminationEntities();
@@ -75,6 +77,11 @@ namespace OnlineExaminationAPIProject.Controllers
             List<Question> questions = db.Questions.Where(q => q.Technology == testStructure.Technology &&
                                                          q.Level == testStructure.Level &&
                                                          q.QuestionFile.IsCurrent == true).ToList();
+            if (questions == null)
+            {
+                db.Tests.Remove(test);
+                return BadRequest();
+            }    
             for (int i = 0; i < testStructure.NumberOfQuestions; i++)
             {
                 TestQuestion testQuestion = new TestQuestion();

@@ -1,0 +1,36 @@
+<div>
+    <h1>Add New File</h1><br/>
+    <form (ngSubmit)="submitFile(questionFile)">
+        <input type="file" #questionFile class="form-control"/><br/>
+        <button type="submit" class="btn btn-success">Add File</button><br/>
+    </form>
+    <p *ngIf="newFile">
+        <br/>
+        File Name: {{newFile.Name}}<br/>
+        Upload Date: {{newFile.UploadDate}}<br/>
+        File Added!<br/>
+    </p>
+    <p *ngIf="errorAddFile">
+        <br/>
+        {{errorAddFile}}<br/>
+    </p>
+</div>
+<br/><hr/>
+<div *ngIf="files">
+    <h1>Remove File</h1><br/>
+    <p>
+        <select [(ngModel)]="selectFile" (change)="setProperties()">
+            <option *ngFor="let file of files" [ngValue]="file">Name: {{file.Name}}, Upload Date: {{file.UploadDate}}</option>
+        </select>
+    </p>
+    <p *ngIf="selectFile.Id">
+        <br/>
+        File Name: {{selectFile.Name}}<br/>
+        Upload Date: {{selectFile.UploadDate}}<br/><br/>
+        <button (click)="removeFile()" class="btn btn-danger">Remove File</button><br/> 
+    </p>
+    <p *ngIf="deletedFile">
+        <br/>
+        File: {{deletedFile.Name}} Deleted!
+    </p>
+</div>

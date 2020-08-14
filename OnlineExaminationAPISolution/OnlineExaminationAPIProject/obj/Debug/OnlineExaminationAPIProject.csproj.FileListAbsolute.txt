@@ -69,3 +69,6 @@ C:\Users\Kartik\source\repos\Project Gladiator\OnlineExaminationAPISolution\Onli
 C:\Users\Kartik\source\repos\Project Gladiator\OnlineExaminationAPISolution\OnlineExaminationAPIProject\obj\Debug\OnlineExaminationAPIProject.csproj.CopyComplete
 C:\Users\Kartik\source\repos\Project Gladiator\OnlineExaminationAPISolution\OnlineExaminationAPIProject\obj\Debug\OnlineExaminationAPIProject.dll
 C:\Users\Kartik\source\repos\Project Gladiator\OnlineExaminationAPISolution\OnlineExaminationAPIProject\obj\Debug\OnlineExaminationAPIProject.pdb
+C:\Users\Kartik\source\repos\Project Gladiator\OnlineExaminationAPISolution\OnlineExaminationAPIProject\bin\System.Web.Cors.dll
+C:\Users\Kartik\source\repos\Project Gladiator\OnlineExaminationAPISolution\OnlineExaminationAPIProject\bin\System.Web.Http.Cors.dll
+C:\Users\Kartik\source\repos\Project Gladiator\OnlineExaminationAPISolution\OnlineExaminationAPIProject\bin\System.Web.Http.Cors.xml

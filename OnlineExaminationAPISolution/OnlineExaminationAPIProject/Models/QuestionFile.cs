@@ -26,6 +26,7 @@ namespace OnlineExaminationAPIProject.Models
         [DataMember]
         public string Name { get; set; }
         public int LastUpdatedBy { get; set; }
+        [DataMember]
         public System.DateTime UpdateDate { get; set; }
         public bool IsCurrent { get; set; }
 

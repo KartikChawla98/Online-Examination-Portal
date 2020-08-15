@@ -1,5 +1,5 @@
 <!-- <div>
-    <h1>Add New Test Pattern</h1><br/>
+    <h1>Add New Structure</h1><br/>
     <form (ngSubmit)="submitStructure(questionStructure)">
         <input type="structure" #questionStructure class="form-control"/><br/>
         <button type="submit" class="btn btn-success">Add Structure</button><br/>
@@ -14,10 +14,10 @@
         <br/>
         {{errorAddStructure}}<br/>
     </p>
-</div> -->
+</div>
 <br/><hr/>
 <div *ngIf="structures">
-    <h1>Modify Test Patterns</h1><br/>
+    <h1>Remove Structure</h1><br/>
     <p>
         <select [(ngModel)]="selectStructure" (change)="setProperties()">
             <option *ngFor="let structure of structures" [ngValue]="structure">Name: {{structure.Name}}, Upload Date: {{structure.UploadDate}}</option>
@@ -33,4 +33,4 @@
         <br/>
         Structure: {{deletedStructure.Name}} Deleted!
     </p>
-</div>
+</div> -->

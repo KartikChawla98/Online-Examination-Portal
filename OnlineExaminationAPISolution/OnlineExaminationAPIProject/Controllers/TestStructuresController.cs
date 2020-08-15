@@ -42,7 +42,7 @@ namespace OnlineExaminationAPIProject.Controllers
 
         [HttpPut]
         [ResponseType(typeof(void))]
-        public IHttpActionResult UpdateTestStructure(TestStructure testStructure)
+        public IHttpActionResult UpdateTestStructure(int AdminId, TestStructure testStructure)
         {
             TestStructure oldData = db.TestStructures.Find(testStructure.Id);
             if (oldData == null || !oldData.IsCurrent)
@@ -53,8 +53,7 @@ namespace OnlineExaminationAPIProject.Controllers
             {
                 return BadRequest(ModelState);
             }
-            //Add admin data
-            if (testStructure.SetProperties(AdminId: 1))
+            if (testStructure.SetProperties(AdminId: AdminId))
             {
                 db.Entry(testStructure).State = EntityState.Modified;
                 try
@@ -78,7 +77,7 @@ namespace OnlineExaminationAPIProject.Controllers
         }
         [HttpPost]
         [ResponseType(typeof(TestStructure))]
-        public IHttpActionResult AddTestStructure(TestStructure testStructure)
+        public IHttpActionResult AddTestStructure(int AdminId, TestStructure testStructure)
         {
             if (TestStructureExists(testStructure.Technology, testStructure.Level))
             {
@@ -88,8 +87,7 @@ namespace OnlineExaminationAPIProject.Controllers
             {
                 return BadRequest(ModelState);
             }
-            //Add admin data
-            if (testStructure.SetProperties(AdminId: 1))
+            if (testStructure.SetProperties(AdminId: AdminId))
             {
                 db.TestStructures.Add(testStructure);
                 try
@@ -113,15 +111,14 @@ namespace OnlineExaminationAPIProject.Controllers
         }
         [HttpDelete]
         [ResponseType(typeof(TestStructure))]
-        public IHttpActionResult DeleteTestStructure(int id)
+        public IHttpActionResult DeleteTestStructure(int AdminId, int StructureId)
         {
-            TestStructure testStructure = db.TestStructures.Find(id);                              
+            TestStructure testStructure = db.TestStructures.Find(StructureId);                              
             if (testStructure == null || !testStructure.IsCurrent)
             {
                 return NotFound();
             }
-            //Add admin data
-            testStructure.SetProperties(AdminId: 1, IsCurrent: false, SetNumberOfQuestions: false);
+            testStructure.SetProperties(AdminId: AdminId, IsCurrent: false, SetNumberOfQuestions: false);
             db.SaveChanges();
             return Ok(testStructure);
         }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ExaminationService } from '../services/examinationService';
 import { File } from '../models/file';
 import { FormGroup, FormControl } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-question-files',
@@ -15,18 +17,22 @@ export class QuestionFilesComponent implements OnInit {
   deletedFile: File;
   files: File[];
   myForm: FormGroup;
-  constructor(private examService: ExaminationService) {
+  constructor(private cookieService: CookieService, private examService: ExaminationService, private router: Router) {
     this.selectFile = new File;
     this.fetchFiles();
   }
+  ngDoCheck(): void {
+    if (this.cookieService.get('Type') != "Admin")
+      this.router.navigate(['/home'])
+  }
   submitFile(ctrl): void {
     if (ctrl.files.length > 0) {
-      if (ctrl.files[0].type != "application/vnd.ms-excel" && ctrl.files[0].type != "text/plain"){
+      if (ctrl.files[0].type != "application/vnd.ms-excel" && ctrl.files[0].type != "text/plain") {
         this.errorAddFile = "File Type should be CSV!";
-        console.log(ctrl.files[0].type);
       }
       else {
         const formData = new FormData();
+        formData.append('id', this.cookieService.get('Id'));
         formData.append('file', ctrl.files[0]);
         this.examService.addFile(formData).subscribe((data) => {
           this.newFile = data;
@@ -51,7 +57,7 @@ export class QuestionFilesComponent implements OnInit {
     })
   }
   removeFile(): void {
-    this.examService.deleteFile(this.selectFile).subscribe((data) => {
+    this.examService.deleteFile(parseInt(this.cookieService.get('Id')), this.selectFile).subscribe((data) => {
       this.deletedFile = data;
       this.fetchFiles();
     });
@@ -64,6 +70,5 @@ export class QuestionFilesComponent implements OnInit {
   }
   ngOnInit(): void {
   }
-
 }
 

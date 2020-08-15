@@ -1,0 +1,30 @@
+<div class="container">
+    <h1>Login</h1><br/>
+    <div class="alert alert-danger" *ngIf="showError">
+        <span>{{showError}}</span>
+    </div>
+    <form [formGroup]="myForm">
+        <div class="inp form-group">
+            <label for="emailInput">Email:</label>
+            <input type="email" class="form-control" id="emailInput" placeholder="xyz@gmail.com" formControlName="email">
+            <div class="alert alert-danger" *ngIf="email.touched && email.invalid">
+                <span *ngIf="email.errors.required">Email cannot be empty</span>
+            </div>
+        </div>
+        <div class="inp">
+            <label for="passwordInput">Password:</label>
+            <input type="password" class="form-control" id="passwordInput" placeholder="Password" formControlName="password">
+            <div class="alert alert-danger" *ngIf="password.touched && password.invalid">
+                <span *ngIf="password.errors.required">Password cannot be empty</span>
+                <span *ngIf="password.errors.minlength">Password cannot be less than 6 characters</span>
+                <span *ngIf="password.errors.maxlength">Password cannot be more than 12 characters</span>
+            </div>
+        </div>
+        <button class="btn btn-secondary go-left" (click)="clearDetails()">Reset</button>
+        <button class="btn btn-primary go-left" (click)="tryLogin()">Login</button>
+        <a routerLink="/forgot-password" class="go-right">Forgot Password?</a><br/><br/><br/>
+        Don't have an account? <a routerLink="/register">Register Here</a>
+    </form>
+</div>
+
+

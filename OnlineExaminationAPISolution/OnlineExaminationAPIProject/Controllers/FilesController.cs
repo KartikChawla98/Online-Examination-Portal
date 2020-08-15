@@ -30,9 +30,11 @@ namespace OnlineExaminationAPIProject.Controllers
         [ResponseType(typeof(QuestionFile))]
         public IHttpActionResult AddFile()
         {
+            int id;
             HttpPostedFile CSV;
             try
             {
+                id = Convert.ToInt32(HttpContext.Current.Request.Form.Get("id"));
                 CSV = HttpContext.Current.Request.Files[0];
             }
             catch
@@ -40,8 +42,7 @@ namespace OnlineExaminationAPIProject.Controllers
                 return BadRequest("No file found");
             }
             QuestionFile file = new QuestionFile();
-            //Add admin data
-            file.SetProperties(AdminId: 1, FileName: CSV.FileName);
+            file.SetProperties(AdminId: id, FileName: CSV.FileName);
             db.QuestionFiles.Add(file);
             db.SaveChanges();
             bool headersRow = true;
@@ -71,15 +72,14 @@ namespace OnlineExaminationAPIProject.Controllers
 
         [HttpDelete]
         [ResponseType(typeof(QuestionFile))]
-        public IHttpActionResult DeleteFile(int id)
+        public IHttpActionResult DeleteFile(int AdminId, int FileId)
         {
-            QuestionFile file = db.QuestionFiles.Find(id);
+            QuestionFile file = db.QuestionFiles.Find(FileId);
             if (file == null || !file.IsCurrent)
             {
                 return NotFound();
             }
-            //Add admin data
-            file.SetProperties(AdminId: 1, IsCurrent: false);
+            file.SetProperties(AdminId: AdminId, IsCurrent: false);
             db.SaveChanges();
             return Ok(file);
         }

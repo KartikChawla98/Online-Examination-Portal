@@ -1,0 +1,14 @@
+.inp {
+    margin-bottom: 5%;
+}
+.container{
+    width: 60%;
+    margin: auto;
+}
+.go-left{
+    float: left;
+    margin-right: 10px;
+}
+.go-right{
+    float: right;
+}

@@ -1,26 +1,35 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="mr-auto">
-    <a class="navbar-brand mr-auto" routerLink="/home">
-      <img class="img-responsive" src="assets/Wizzard.jpg" style="height: 50px; width: auto" alt="">
-      Cunning Wizzards
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-center">
+  <a class="navbar-brand d-flex w-50 mr-auto" routerLink="/home">
+      <img class="img-responsive" src="assets/Wizzard.jpg" style="height: 35px; width: auto" alt="">
+      Cunning Wizzards!
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-    </button>
-  </div>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item dropdown">
+  </button>
+  <div class="navbar-collapse collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav w-100 justify-content-center">
+      <li class="nav-item">
+          <a class="nav-link" disabled>Hi {{displayName}}</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home">Home</a>
+      </li>
+      <li *ngIf="displayName=='User'" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Login
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" routerLink="/login">Admin</a>
-          <a class="dropdown-item" routerLink="/login">User</a>
+          <a class="dropdown-item" routerLink="/login" [queryParams]="{ type: 'Admin' }">Admin</a>
+          <a class="dropdown-item" routerLink="/login" [queryParams]="{ type: 'User' }">User</a>
         </div>
       </li>
-      <li class="nav-item">
+      <li *ngIf="displayName=='User'" class="nav-item">
         <a class="nav-link" routerLink="/register">Register</a>
+      </li>
+      <li *ngIf="displayName!='User'" class="nav-item">
+        <a class="nav-link" role="button" (click)="logOut()">Logout</a>
       </li>
     </ul>
   </div>

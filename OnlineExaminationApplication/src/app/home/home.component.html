@@ -1,7 +1,6 @@
 <div>
-    <a routerLink="" class="btn btn-secondary btn-lg btn-block">View Reports</a><br/>
-    <a routerLink="" class="btn btn-primary btn-lg btn-block">New Exam</a><br/><br/>
-    <a routerLink="" class="btn btn-secondary btn-lg btn-block">View Reports</a><br/>
-    <a routerLink="/files" class="btn btn-primary btn-lg btn-block">Add or Remove Question Files</a><br/>
-    <a routerLink="/structures" class="btn btn-primary btn-lg btn-block">Change Test Structures</a><br/>
+    <p><a routerLink="" class="btn btn-secondary btn-lg btn-block">View Reports</a></p>
+    <p *ngIf="displayType=='User'"><a routerLink="" class="btn btn-primary btn-lg btn-block">New Exam</a></p>
+    <p *ngIf="displayType=='Admin'"><a routerLink="/files" class="btn btn-primary btn-lg btn-block">Change Question Files</a></p>
+    <p *ngIf="displayType=='Admin'"><a routerLink="/structures" class="btn btn-primary btn-lg btn-block">Change Test Structures</a></p>
 </div>

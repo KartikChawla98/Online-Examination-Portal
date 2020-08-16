@@ -35,6 +35,7 @@ namespace OnlineExaminationAPIProject.Models
         [DataMember]
         public int PassingScore { get; set; }
         public int LastUpdatedBy { get; set; }
+        [DataMember]
         public System.DateTime UpdateDate { get; set; }
         public bool IsCurrent { get; set; }
 
@@ -42,21 +43,21 @@ namespace OnlineExaminationAPIProject.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Test> Tests { get; set; }
 
-        public bool SetProperties(int AdminId, bool IsCurrent = true, bool SetNumberOfQuestions = true)
+        public bool SetProperties(int AdminId, bool IsCurrent = true/*, bool SetNumberOfQuestions = true*/)
         {
             try {
                 if (this.Level < 1 || this.Level > 3)
                     return false;
-                if (SetNumberOfQuestions)
-                {
-                    using (db_OnlineExaminationEntities db = new db_OnlineExaminationEntities())
-                    {
-                        int totalQuestions = db.Questions.Count(q => q.Technology == this.Technology &&
-                                                                q.Level == this.Level &&
-                                                                q.QuestionFile.IsCurrent == true);
-                        this.NumberOfQuestions = this.NumberOfQuestions <= totalQuestions ? this.NumberOfQuestions : totalQuestions;
-                    }
-                }
+                //if (SetNumberOfQuestions)
+                //{
+                //    using (db_OnlineExaminationEntities db = new db_OnlineExaminationEntities())
+                //    {
+                //        int totalQuestions = db.Questions.Count(q => q.Technology == this.Technology &&
+                //                                                q.Level == this.Level &&
+                //                                                q.QuestionFile.IsCurrent == true);
+                //        this.NumberOfQuestions = this.NumberOfQuestions <= totalQuestions ? this.NumberOfQuestions : totalQuestions;
+                //    }
+                //}
                 this.IsCurrent = IsCurrent;
                 this.LastUpdatedBy = AdminId;
                 this.UpdateDate = System.DateTime.Now;

@@ -3,8 +3,8 @@
     <div class="alert alert-danger" *ngIf="showError">
         <span>{{showError}}</span>
     </div>
-    <form [formGroup]="myForm">
-        <div class="inp form-group">
+    <form [formGroup]="myForm" (ngSubmit)="tryLogin()">
+        <div class="inp">
             <label for="emailInput">Email:</label>
             <input type="email" class="form-control" id="emailInput" placeholder="xyz@gmail.com" formControlName="email">
             <div class="alert alert-danger" *ngIf="email.touched && email.invalid">
@@ -20,8 +20,8 @@
                 <span *ngIf="password.errors.maxlength">Password cannot be more than 12 characters</span>
             </div>
         </div>
-        <button class="btn btn-secondary go-left" (click)="clearDetails()">Reset</button>
-        <button class="btn btn-primary go-left" (click)="tryLogin()">Login</button>
+        <button type="button" class="btn btn-secondary go-left" (click)="clearDetails()">Reset</button>
+        <button type="submit" class="btn btn-primary go-left">Login</button>
         <a routerLink="/forgot-password" class="go-right">Forgot Password?</a><br/><br/><br/>
         Don't have an account? <a routerLink="/register">Register Here</a>
     </form>

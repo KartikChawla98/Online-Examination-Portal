@@ -35,52 +35,54 @@ namespace OnlineExaminationAPIProject.Controllers
             }
             return Ok(test);
         }
-
         [HttpPut]
         [ResponseType(typeof(void))]
-        public IHttpActionResult EndTest(int id, List<TestQuestion> testQuestions)
+        public IHttpActionResult SaveUserAnswer(int TestQuestionId, [FromBody]int? UserAnswer)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            if (!TestExists(id))
-                return NotFound();
-            Test test = db.Tests.Find(id);
-            int passingScore = test.TestStructure.PassingScore;
-            int totalScore = 0;
-            foreach (TestQuestion testQuestion in testQuestions)
-            {
-                TestQuestion dbTestQuestion = db.TestQuestions.Find(testQuestion.Id);
-                dbTestQuestion.UserAnswer = testQuestion.UserAnswer;
-                db.SaveChanges();
-                if (dbTestQuestion.Question.CorrectOption == dbTestQuestion.UserAnswer)
-                    totalScore++;
-            }
-            test.Score = totalScore;
-            test.Result = totalScore >= passingScore ? true : false;
-            test.EndTime = System.DateTime.Now < test.EndTime ? System.DateTime.Now : test.EndTime;
+            if (UserAnswer < 1 || UserAnswer > 4 || UserAnswer == null)
+                UserAnswer = 0;
+            db.TestQuestions.Find(TestQuestionId).UserAnswer = UserAnswer;
             db.SaveChanges();
             return StatusCode(HttpStatusCode.NoContent);
         }
-        [HttpPost]
+        [HttpDelete]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult EndTest(int TestId)
+        {
+            Test test = db.Tests.Find(TestId);
+            if (test.Score == null)
+            {
+                int passingScore = test.TestStructure.PassingScore;
+                int totalScore = 0;
+                foreach (TestQuestion testQuestion in test.TestQuestions)
+                {
+                    if (testQuestion.Question.CorrectOption == testQuestion.UserAnswer)
+                        totalScore++;
+                }
+                test.Score = totalScore;
+                test.Result = totalScore >= passingScore ? true : false;
+                test.EndTime = System.DateTime.Now < test.EndTime ? System.DateTime.Now : test.EndTime;
+                db.SaveChanges();
+            }
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        [HttpGet]
         [ResponseType(typeof(List<TestQuestion>))]
-        public IHttpActionResult AddTest(int id)
+        public IHttpActionResult AddTest(int UserId, int TestStructureId)
         {
             Test test = new Test();
-            //Add user data
-            test.SetProperties(UserId: 1, TestStructureId: id);
+            test.SetProperties(UserId: UserId, TestStructureId: TestStructureId);
             db.Tests.Add(test);
             db.SaveChanges();
-            TestStructure testStructure = db.TestStructures.Find(id);
+            TestStructure testStructure = db.TestStructures.Find(TestStructureId);
             Random rng = new Random();
             List<Question> questions = db.Questions.Where(q => q.Technology == testStructure.Technology &&
                                                          q.Level == testStructure.Level &&
                                                          q.QuestionFile.IsCurrent == true).ToList();
-            if (questions == null)
+            if (questions.Count == 0)
             {
                 db.Tests.Remove(test);
-                return BadRequest();
+                return Ok(new List<TestQuestion>());
             }    
             for (int i = 0; i < testStructure.NumberOfQuestions; i++)
             {
@@ -93,22 +95,6 @@ namespace OnlineExaminationAPIProject.Controllers
             test.EndTime = test.StartTime.Value.AddMinutes(testStructure.MaxMinutes);
             db.SaveChanges();
             return CreatedAtRoute("DefaultApi", new { id = test.Id }, db.TestQuestions.Where(tq => tq.TestId == test.Id).ToList());
-        }
-
-        // DELETE: api/Tests/5
-        [ResponseType(typeof(Test))]
-        public IHttpActionResult DeleteTest(int id)
-        {
-            Test test = db.Tests.Find(id);
-            if (test == null)
-            {
-                return NotFound();
-            }
-
-            db.Tests.Remove(test);
-            db.SaveChanges();
-
-            return Ok(test);
         }
 
         protected override void Dispose(bool disposing)

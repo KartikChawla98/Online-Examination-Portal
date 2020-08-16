@@ -18,6 +18,7 @@ namespace OnlineExaminationAPIProject.Models
     {
         [DataMember]
         public int Id { get; set; }
+        [DataMember]
         public int TestId { get; set; }
         public int QuestionId { get; set; }
         [DataMember]

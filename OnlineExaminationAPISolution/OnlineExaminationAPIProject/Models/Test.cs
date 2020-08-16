@@ -21,10 +21,9 @@ namespace OnlineExaminationAPIProject.Models
         {
             this.TestQuestions = new HashSet<TestQuestion>();
         }
+        [DataMember]
         public int Id { get; set; }
-        [DataMember]
         public int UserId { get; set; }
-        [DataMember]
         public int TestStructureId { get; set; }
         [DataMember]
         public Nullable<System.DateTime> StartTime { get; set; }

@@ -11,9 +11,10 @@ import { CookieService } from 'ngx-cookie-service';
 export class AppComponent {
   title = 'OnlineExaminationApplication';
   displayName: string = "User";
-  constructor(private cookieService: CookieService) {
+  constructor(private cookieService: CookieService, private examService: ExaminationService) {
   }
   logOut() {
+    //this.examService.setAccessor(new Accessor);
     this.cookieService.delete('Type');
     this.cookieService.delete('Name');
     this.cookieService.delete('Email');

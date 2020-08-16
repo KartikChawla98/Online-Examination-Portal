@@ -16,14 +16,13 @@ export class QuestionFilesComponent implements OnInit {
   selectFile: File;
   deletedFile: File;
   files: File[];
-  myForm: FormGroup;
   constructor(private cookieService: CookieService, private examService: ExaminationService, private router: Router) {
     this.selectFile = new File;
     this.fetchFiles();
   }
   ngDoCheck(): void {
     if (this.cookieService.get('Type') != "Admin")
-      this.router.navigate(['/home'])
+      this.router.navigate(['/login'], { queryParams: { type: 'Admin' }});
   }
   submitFile(ctrl): void {
     if (ctrl.files.length > 0) {

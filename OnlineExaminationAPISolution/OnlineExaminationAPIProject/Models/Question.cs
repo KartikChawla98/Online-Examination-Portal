@@ -21,7 +21,6 @@ namespace OnlineExaminationAPIProject.Models
         {
             this.TestQuestions = new HashSet<TestQuestion>();
         }
-    
         public int Id { get; set; }
         public int FileId { get; set; }
         public string Technology { get; set; }

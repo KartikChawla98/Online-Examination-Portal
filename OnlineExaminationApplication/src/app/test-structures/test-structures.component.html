@@ -1,36 +1,109 @@
-<!-- <div>
-    <h1>Add New Structure</h1><br/>
-    <form (ngSubmit)="submitStructure(questionStructure)">
-        <input type="structure" #questionStructure class="form-control"/><br/>
-        <button type="submit" class="btn btn-success">Add Structure</button><br/>
-    </form>
-    <p *ngIf="newStructure">
-        <br/>
-        Structure Name: {{newStructure.Name}}<br/>
-        Upload Date: {{newStructure.UploadDate}}<br/>
-        Structure Added!<br/>
-    </p>
-    <p *ngIf="errorAddStructure">
-        <br/>
-        {{errorAddStructure}}<br/>
-    </p>
+<div class="container">
+    <div>
+        <h1>Add New Structure</h1><br/>
+        <div class="alert alert-danger" *ngIf="showError">
+            <span>{{showError}}</span>
+        </div>
+        <form [formGroup]="myAddForm" (ngSubmit)="submitStructure()">
+            <div class="inp">
+                <input type="text" class="form-control" placeholder="Technology" formControlName="atechnology">
+                <div class="alert alert-danger" *ngIf="atechnology.touched && atechnology.invalid">
+                    <span *ngIf="atechnology.errors.required">Technology cannot be empty</span>
+                </div>
+            </div>
+            <div class="inp">
+                <input type="number" class="form-control" placeholder="Level" formControlName="alevel" min="1" max="3">
+                <div class="alert alert-danger" *ngIf="alevel.touched && alevel.invalid">
+                    <span *ngIf="alevel.errors.required">Level cannot be empty</span>
+                    <span *ngIf="alevel.errors.min">Level cannot be less than 1</span>
+                    <span *ngIf="alevel.errors.max">Level cannot be more than 3</span>
+                </div>
+            </div>
+            <div class="inp">
+                <input type="number" class="form-control" placeholder="Max Minutes" formControlName="aminutes" min="1">
+                <div class="alert alert-danger" *ngIf="aminutes.touched && aminutes.invalid">
+                    <span *ngIf="aminutes.errors.required">Max Minutes cannot be empty</span>
+                    <span *ngIf="aminutes.errors.min">Max Minutes cannot be less than 1</span>
+                </div>
+            </div>
+            <div class="inp">
+                <input type="number" class="form-control" placeholder="Number of Questions" formControlName="aquestions" min="1">
+                <div class="alert alert-danger" *ngIf="aquestions.touched && aquestions.invalid">
+                    <span *ngIf="aquestions.errors.required">Number of Questions cannot be empty</span>
+                    <span *ngIf="aquestions.errors.min">Number of Questions cannot be less than 1</span>
+                </div>
+            </div>
+            <div class="inp">
+                <input type="number" class="form-control" placeholder="Passing Score" formControlName="ascore" min="1">
+                <div class="alert alert-danger" *ngIf="ascore.touched && ascore.invalid">
+                    <span *ngIf="ascore.errors.required">Passing Score cannot be empty</span>
+                    <span *ngIf="ascore.errors.min">Passing cannot be less than 1</span>
+                </div>
+            </div>
+            <button type="button" class="btn btn-secondary but" (click)="clearAddDetails()">Reset</button>
+            <button type="submit" class="btn btn-success but">Add Structure</button>
+        </form>
+        <p class="inp" *ngIf="newStructure">
+            <br/>
+            Test Technology: {{newStructure.Technology}}<br/>
+            Test Level: {{newStructure.Level}}<br/>
+            Upload Date: {{newStructure.UpdateDate}}<br/>
+            Test Structure Added!<br/>
+        </p>
+    </div>
+    <br/><hr/>
+    <div *ngIf="structures">
+        <h1>Change Structures</h1><br/>
+        <p>
+            <select [(ngModel)]="selectStructure" (change)="setProperties()">
+                <option *ngFor="let structure of structures" [ngValue]="structure">Technology: {{structure.Technology}}, Level: {{structure.Level}}, Update Date: {{structure.UpdateDate}}</option>
+            </select>
+        </p>
+        <form [formGroup]="myUpdateForm" *ngIf="selectStructure.Id" (ngSubmit)="editStructure()">
+            <div class="inp">
+                <input type="text" disabled class="form-control" placeholder="Technology: {{selectStructure.Technology}}">
+            </div>
+            <div class="inp">
+                <input type="text" disabled class="form-control" placeholder="Level: {{selectStructure.Level}}">
+            </div>
+            <div class="inp">
+                <input type="number" class="form-control" placeholder="Max Minutes" formControlName="uminutes" min="1">
+                <div class="alert alert-danger" *ngIf="uminutes.touched && uminutes.invalid">
+                    <span *ngIf="uminutes.errors.required">Max Minutes cannot be empty</span>
+                    <span *ngIf="uminutes.errors.min">Max Minutes cannot be less than 1</span>
+                </div>
+            </div>
+            <div class="inp">
+                <input type="number" class="form-control" placeholder="Number of Questions" formControlName="uquestions" min="1">
+                <div class="alert alert-danger" *ngIf="uquestions.touched && uquestions.invalid">
+                    <span *ngIf="uquestions.errors.required">Number of Questions cannot be empty</span>
+                    <span *ngIf="uquestions.errors.min">Number of Questions cannot be less than 1</span>
+                </div>
+            </div>
+            <div class="inp">
+                <input type="number" class="form-control" placeholder="Passing Score" formControlName="uscore" min="1">
+                <div class="alert alert-danger" *ngIf="uscore.touched && uscore.invalid">
+                    <span *ngIf="uscore.errors.required">Passing Score cannot be empty</span>
+                    <span *ngIf="uscore.errors.min">Passing cannot be less than 1</span>
+                </div>
+            </div>
+            <button type="button" class="btn btn-secondary but" (click)="clearUpdateDetails()">Reset</button>
+            <button type="submit" class="btn btn-success but">Edit Structure</button>
+            <button type="button" class="btn btn-danger but" (click)="removeStructure()">Remove Structure</button><br/>
+        </form>
+        <p *ngIf="updatedStructure">
+            <br/>
+            Test Technology: {{updatedStructure.Technology}}<br/>
+            Test Level: {{updatedStructure.Level}}<br/>
+            Update Date: {{updatedStructure.UpdateDate}}<br/>
+            Test Structure Updated!<br/>
+        </p>
+        <p *ngIf="deletedStructure">
+            <br/>
+            Test Technology: {{deletedStructure.Technology}}<br/>
+            Test Level: {{deletedStructure.Level}}<br/>
+            Update Date: {{deletedStructure.UpdateDate}}<br/>
+            Test Structure Deleted!<br/>
+        </p>
+    </div>
 </div>
-<br/><hr/>
-<div *ngIf="structures">
-    <h1>Remove Structure</h1><br/>
-    <p>
-        <select [(ngModel)]="selectStructure" (change)="setProperties()">
-            <option *ngFor="let structure of structures" [ngValue]="structure">Name: {{structure.Name}}, Upload Date: {{structure.UploadDate}}</option>
-        </select>
-    </p>
-    <p *ngIf="selectStructure.Id">
-        <br/>
-        Structure Name: {{selectStructure.Name}}<br/>
-        Upload Date: {{selectStructure.UploadDate}}<br/><br/>
-        <button (click)="removeStructure()" class="btn btn-danger">Remove Structure</button><br/> 
-    </p>
-    <p *ngIf="deletedStructure">
-        <br/>
-        Structure: {{deletedStructure.Name}} Deleted!
-    </p>
-</div> -->

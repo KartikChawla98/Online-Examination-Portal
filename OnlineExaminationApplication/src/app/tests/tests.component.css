@@ -1,0 +1,13 @@
+.but {
+    margin-right: 10px;
+}
+.container {
+    width: 70%;
+    margin: auto;
+}
+.go-left {
+    text-align-last: left; 
+}
+.go-right {
+    float: right;
+}

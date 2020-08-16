@@ -20,23 +20,30 @@ namespace OnlineExaminationAPIProject.Controllers
     {
         private db_OnlineExaminationEntities db = new db_OnlineExaminationEntities();
 
-        //Admin
+        //Admin - All Test Structures
         [HttpGet]
         public List<TestStructure> GetAllTestStructures()
         {
             //If Admin
             return db.TestStructures.Where(ts => ts.IsCurrent == true).ToList();
-            //If User
         }
-        //User
+        //User - Test Options
         [HttpGet]
-        public List<TestStructure> GetTestOptions(int id)
+        public List<TestStructure> GetTestOptions(int UserId)
         {
             List<TestStructure> testOptions = db.TestStructures.Where(ts => ts.IsCurrent == true).ToList();
-            List<Test> userTests = db.Tests.Where(t => t.UserId == id && t.TestStructure.IsCurrent == true &&
+            List<Test> userTests = db.Tests.Where(t => t.UserId == UserId && t.TestStructure.IsCurrent == true &&
                                                  t.Result == true).ToList();
             foreach (Test test in userTests)
                testOptions.Remove(test.TestStructure);
+            var testGroup = testOptions.GroupBy(t => t.Technology);
+            foreach (var groupItem in testGroup)
+            {
+                foreach (TestStructure structure in groupItem)
+                {
+                    testOptions.Remove(testOptions.Find(t => t.Technology == structure.Technology && t.Level > structure.Level));
+                }
+            }
             return testOptions;
         }
 
@@ -44,14 +51,10 @@ namespace OnlineExaminationAPIProject.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult UpdateTestStructure(int AdminId, TestStructure testStructure)
         {
-            TestStructure oldData = db.TestStructures.Find(testStructure.Id);
+            TestStructure oldData = db.TestStructures.AsNoTracking().Where(ts => ts.Id == testStructure.Id).FirstOrDefault();
             if (oldData == null || !oldData.IsCurrent)
             {
                 return NotFound();
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
             }
             if (testStructure.SetProperties(AdminId: AdminId))
             {
@@ -81,11 +84,7 @@ namespace OnlineExaminationAPIProject.Controllers
         {
             if (TestStructureExists(testStructure.Technology, testStructure.Level))
             {
-                return Conflict();
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+                return Ok(new TestStructure());
             }
             if (testStructure.SetProperties(AdminId: AdminId))
             {
@@ -111,14 +110,14 @@ namespace OnlineExaminationAPIProject.Controllers
         }
         [HttpDelete]
         [ResponseType(typeof(TestStructure))]
-        public IHttpActionResult DeleteTestStructure(int AdminId, int StructureId)
+        public IHttpActionResult DeleteTestStructure(int AdminId, int TestStructureId)
         {
-            TestStructure testStructure = db.TestStructures.Find(StructureId);                              
+            TestStructure testStructure = db.TestStructures.Find(TestStructureId);                              
             if (testStructure == null || !testStructure.IsCurrent)
             {
                 return NotFound();
             }
-            testStructure.SetProperties(AdminId: AdminId, IsCurrent: false, SetNumberOfQuestions: false);
+            testStructure.SetProperties(AdminId: AdminId, IsCurrent: false/*, SetNumberOfQuestions: false*/);
             db.SaveChanges();
             return Ok(testStructure);
         }

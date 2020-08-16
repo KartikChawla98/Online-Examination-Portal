@@ -4,8 +4,12 @@ import { Adapter } from './adapter';
 export class Structure {
     constructor(
         public Id?: number,
-        public Name?: string,
-        public UploadDate?: Date
+        public Technology?: string,
+        public Level?: number,
+        public MaxMinutes?: number,
+        public NumberOfQuestions?: number,
+        public PassingScore?: number,
+        public UpdateDate?: Date
     ) {}
 }
 
@@ -14,6 +18,7 @@ export class Structure {
 })
 export class StructureAdapter implements Adapter<Structure> {
     adapt(item: any): Structure{
-        return new Structure(item.Id, item.Name, new Date(item.UpdateDate));
+        return new Structure(item.Id, item.Technology, item.Level, item.MaxMinutes, 
+                            item.NumberOfQuestions, item.PassingScore, new Date(item.UpdateDate));
     }
 }

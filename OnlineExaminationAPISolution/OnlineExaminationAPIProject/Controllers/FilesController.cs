@@ -30,11 +30,11 @@ namespace OnlineExaminationAPIProject.Controllers
         [ResponseType(typeof(QuestionFile))]
         public IHttpActionResult AddFile()
         {
-            int id;
+            int AdminId;
             HttpPostedFile CSV;
             try
             {
-                id = Convert.ToInt32(HttpContext.Current.Request.Form.Get("id"));
+                AdminId = Convert.ToInt32(HttpContext.Current.Request.Form.Get("id"));
                 CSV = HttpContext.Current.Request.Files[0];
             }
             catch
@@ -42,7 +42,7 @@ namespace OnlineExaminationAPIProject.Controllers
                 return BadRequest("No file found");
             }
             QuestionFile file = new QuestionFile();
-            file.SetProperties(AdminId: id, FileName: CSV.FileName);
+            file.SetProperties(AdminId: AdminId, FileName: CSV.FileName);
             db.QuestionFiles.Add(file);
             db.SaveChanges();
             bool headersRow = true;

@@ -1,0 +1,62 @@
+<div class="container">
+    <div *ngIf="structures">
+        <h1>Test Options</h1><br/>
+        <p>
+            <select [(ngModel)]="selectStructure">
+                <option *ngFor="let structure of structures" [ngValue]="structure">Technology: {{structure.Technology}}, Level: {{structure.Level}}</option>
+            </select>
+        </p>
+        <p *ngIf="selectStructure.Id">
+            <br/>
+            Technology: {{selectStructure.Technology}}<br/>
+            Level: {{selectStructure.Level}}<br/><br/>
+            <button (click)="showInstructions()" class="btn btn-primary">Take Test</button><br/> 
+        </p>
+    </div>
+    <div *ngIf="showingInstructions">
+        <h1>Test Instructions</h1><br/>
+        <p class="lead" class="go-left">
+            Please go through the following instructions carefully:<br/><br/>
+            <strong>Technology:</strong> {{selectStructure.Technology}}<br/>
+            <strong>Level:</strong> {{selectStructure.Level}}<br/>
+            <strong>Type of Questions:</strong> MCQ<br/>
+            <strong>Number of Questions:</strong> {{selectStructure.NumberOfQuestions}}<br/>
+            <strong>Time Allotted:</strong> {{selectStructure.MaxMinutes}} minutes<br/>
+            <strong>Marking Scheme:</strong> +1/0/0 for each correct, incorrect, and unanswered question respectively.<br/>
+            <strong>Passing Score:</strong> {{selectStructure.PassingScore}}<br/>
+            <strong>Number of Attemps: </strong> A particular test can be given as many times as needed until you pass and move to the next level, or complete all levels for that technology.<br/>
+            <strong>Test Reports:</strong> will be shown after the test, and at any time in the future by going to the "View Reports" section.<br/><br/>
+            <strong>Navigation Instructions:</strong> Click on the Next or Previous buttons on the bottom to navigate between the questions sequentially, or jump to any question by using the box provided.<br/>
+        </p><br/>
+        <input class="form-check-input" type="checkbox" (change)="showingStart=$event.target.checked"> I have read all the instructions carefully.<br/><br/>
+        <button (click)="goBack()" class="btn btn-secondary but">Go Back</button>
+        <button [disabled]="!showingStart" (click)="startTest()" class="btn btn-primary but">Start Test</button><br/>
+    </div>
+    <div *ngIf="testQuestions" class="go-left">
+        <div class="btn-group go-center" role="group" aria-label="Questions">
+            <button *ngFor="let testQuestion of testQuestions; let i = index;" (click)="currentQuestion=i" type="button" class="btn" [ngClass]="{'btn-info': currentQuestion==i,'btn-success': currentAnswers[i],'btn-secondary': !currentAnswers[i]}">{{i+1}}</button>
+        </div>
+        <ul class="list-group">
+            <ng-container *ngFor="let testQuestion of testQuestions; let i = index">
+                <li *ngIf="currentQuestion==i" class="list-group-item list-group-item-secondary">
+                    <h2>{{i+1}}. {{testQuestion.Question.QuestionString}}</h2><br>
+                    <mat-radio-group (change)="changeUserAnswer($event, i)">
+                        <mat-radio-button value="1" [checked]="currentAnswers[i]=='1'" class="lead">{{testQuestion.Question.Option1}}</mat-radio-button><br/>
+                        <mat-radio-button value="2" [checked]="currentAnswers[i]=='2'" class="lead">{{testQuestion.Question.Option2}}</mat-radio-button><br/>
+                        <mat-radio-button value="3" [checked]="currentAnswers[i]=='3'" class="lead">{{testQuestion.Question.Option3}}</mat-radio-button><br/>
+                        <mat-radio-button value="4" [checked]="currentAnswers[i]=='4'" class="lead">{{testQuestion.Question.Option4}}</mat-radio-button><br/>
+                    </mat-radio-group>
+                </li>
+            </ng-container>
+        </ul>
+        <br/>
+        <br/>
+        <button [disabled]="currentQuestion==0" (click)="changeCounter(-1)" class="btn btn-secondary but">Previous</button>
+        <button [disabled]="currentQuestion==selectStructure.NumberOfQuestions-1" (click)="changeCounter(1)" class="btn btn-primary but">Next</button>
+        <button (click)="finishTest()" class="btn btn-danger but go-right">End Test</button>
+    </div>
+    <div *ngIf="showError" class="alert alert-danger">
+        <span>{{showError}}</span><br/>
+        <a routerLink="/home" class="btn btn-primary btn-lg btn-block">Home</a><br/>
+    </div>
+</div>

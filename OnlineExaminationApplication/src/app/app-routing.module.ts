@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 import { QuestionFilesComponent } from './question-files/question-files.component';
 import { TestStructuresComponent } from './test-structures/test-structures.component';
-import { LoginComponent } from './login/login.component';
+import { TestsComponent } from './tests/tests.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'files', component: QuestionFilesComponent},
   {path: 'structures', component: TestStructuresComponent},
+  {path: 'tests', component: TestsComponent},
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: '**',   redirectTo: '/home' }
 ];

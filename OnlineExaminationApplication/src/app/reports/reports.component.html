@@ -1,0 +1,106 @@
+<div class="container">
+    <div *ngIf="reports">
+        <h1>View Reports</h1><br/><hr/>
+        <h2>Filters</h2><br/>
+        <table class="go-left">
+            <tr>
+                <td>
+                Technology:
+                </td>
+                <td>
+                <select [(ngModel)]="filterTechnology">
+                    <option *ngFor="let technology of uniqueTechnologies" [ngValue]="technology">{{technology}}</option>
+                </select>
+                </td>
+            </tr>
+            <tr>
+            <td>
+            Level:
+            </td>
+            <td>
+            <select [(ngModel)]="filterLevel">
+                <option *ngFor="let level of uniqueLevels" [ngValue]="level">{{level}}</option>
+            </select>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            City:
+            </td>
+            <td>
+            <select [(ngModel)]="filterCity">
+                <option *ngFor="let city of uniqueCities" [ngValue]="city">{{city}}</option>
+            </select>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            State:
+            </td>
+            <td>
+            <select [(ngModel)]="filterState">
+                <option *ngFor="let state of uniqueStates" [ngValue]="state">{{state}}</option>
+            </select>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            Result:
+            </td>
+            <td>
+            <select [(ngModel)]="filterResult">
+                <option value="Pass">Pass</option>
+                <option value="Fail">Fail</option>
+            </select>
+            </td>
+            </tr> 
+        </table>
+        <br/>
+        <button (click)="clearFilters()" class="btn btn-secondary but">Clear Filters</button>
+        <button (click)="applyFilters()" class="btn btn-primary but">Apply Filters</button>
+        <br/><br/><hr/>
+        <h2>Filtered Reports</h2><br/>
+        <p>
+            <select [(ngModel)]="selectedReport">
+                <option *ngFor="let report of filteredReports" [ngValue]="report">User's Name: {{report.User.FullName}}, Technology: {{report.Structure.Technology}}, Level: {{report.Structure.Level}}, Result: {{report.Result}}</option>
+            </select>
+        </p>
+        <br/><hr/>
+        <div *ngIf="selectedReport.Id">
+            <div class="go-left">
+                <strong>User ID: </strong> {{selectedReport.User.Id}}<br/>
+                <strong>Test ID:</strong> {{selectedReport.Id}}<br/>
+                <strong>Name: </strong> {{selectedReport.User.FullName}}<br/>
+                <strong>City: </strong> {{selectedReport.User.City}}<br/>
+                <strong>State: </strong> {{selectedReport.User.State}}<br/>
+                <strong>Technology:</strong> {{selectedReport.Structure.Technology}}<br/>
+                <strong>Level:</strong> {{selectedReport.Structure.Level}}<br/>
+                <strong>Percentage Score:</strong> {{selectedReport.Score * 100 / selectedReport.Structure.NumberOfQuestions}}<br/>
+                <strong>Result:</strong> {{selectedReport.Result}}<br/>
+                <strong>Start Time:</strong> {{selectedReport.StartTime}}<br/>
+                <strong>End Time:</strong> {{selectedReport.EndTime}}<br/>
+                <strong>Number of Questions:</strong> {{selectedReport.Structure.NumberOfQuestions}}<br/>
+                <strong>Raw Score:</strong> {{selectedReport.Score}}<br/>
+                <strong>Passing Score:</strong> {{selectedReport.Structure.PassingScore}}<br/>
+                <strong>Max Minutes Allotted:</strong> {{selectedReport.Structure.MaxMinutes}}<br/><br/>
+                <button (click)="showDetails=!showDetails" class="btn btn-primary">Show Question Details</button><br/><hr/>
+                <ng-container *ngIf="showDetails">
+                    <div *ngFor="let testQuestion of selectedReport.TestQuestions; let i = index" >
+                        Question {{i+1}}: {{testQuestion.Question.QuestionString}}<br/><br/>
+                        <ol>
+                            <li>{{testQuestion.Question.Option1}}</li>
+                            <li>{{testQuestion.Question.Option2}}</li>
+                            <li>{{testQuestion.Question.Option3}}</li>
+                            <li>{{testQuestion.Question.Option4}}</li>
+                        </ol>
+                        <strong>User Answer:</strong> {{testQuestion.UserAnswer!=null?testQuestion.UserAnswer:"Not Answered"}}<br/><hr/>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="showError" class="alert alert-danger">
+        <span>{{showError}}</span><br/>
+        <a routerLink="/home" class="btn btn-primary btn-lg btn-block">Home</a><br/>
+    </div>
+</div>

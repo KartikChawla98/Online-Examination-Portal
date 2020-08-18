@@ -35,8 +35,9 @@ namespace OnlineExaminationAPIProject.Models
         public string Option3 { get; set; }
         [DataMember]
         public string Option4 { get; set; }
+        [DataMember]
         public int CorrectOption { get; set; }
-    
+
         public virtual QuestionFile QuestionFile { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }

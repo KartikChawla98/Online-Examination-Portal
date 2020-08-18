@@ -94,7 +94,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Wizard.jpg" />
     <Content Include="Global.asax" />
+    <Content Include="App_Data\ForgotPassword.html" />
     <Content Include="Models\OnlineExaminationModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>OnlineExaminationModel.edmx</DependentUpon>
@@ -111,6 +113,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TestsController.cs" />
     <Compile Include="Controllers\TestStructuresController.cs" />
     <Compile Include="Models\Accessor.cs" />
@@ -143,6 +146,7 @@
     <Compile Include="Models\QuestionFile.cs">
       <DependentUpon>OnlineExaminationModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Reports.cs" />
     <Compile Include="Models\Test.cs">
       <DependentUpon>OnlineExaminationModel.tt</DependentUpon>
     </Compile>
@@ -173,9 +177,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

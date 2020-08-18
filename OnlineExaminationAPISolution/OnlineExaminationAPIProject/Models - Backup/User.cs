@@ -11,7 +11,8 @@ namespace OnlineExaminationAPIProject.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Text;
+
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,11 +20,10 @@ namespace OnlineExaminationAPIProject.Models
         {
             this.Tests = new HashSet<Test>();
         }
-    
         public int Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
-        public byte[] Password { get; set; }
+        public string Password { get; set; }
         public System.DateTime DOB { get; set; }
         public string Contact { get; set; }
         public string City { get; set; }

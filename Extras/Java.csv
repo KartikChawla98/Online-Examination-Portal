@@ -10,7 +10,7 @@ Java,1,Which operator is used by Java run time implementations to free the memor
 Java,1, Which function is used to perform some action when the object is to be destroyed?,delete(),main(),finalize(),none of the mentioned,3
 Java,1,What is the return type of Constructors?,int,float,void, none of the mentioned,4
 Java,1,Which of these method of String class is used to obtain character at specified index?,char(), Charat(),charat(), charAt(),4
-Java,1,. Which of these keywords is used to refer to member of base class from a subclass?,upper, super, this,none of the mentioned,2
+Java,1,Which of these keywords is used to refer to member of base class from a subclass?,upper, super, this,none of the mentioned,2
 Java,1, Which of the following statements are incorrect?,Every string is an object of class String,"Java defines a peer class of String, called StringBuffer, which allows string to be altered",Strings in java are mutable,String is a class,3
 Java,1,Where is a new object allocated memory?,Young space,Old space,Young or Old space depending on space availability, JVM,1
 Java,2, What is -Xms and -Xmx while starting jvm?,Initial; Maximum memory,Maximum; Initial memory,Maximum memory, Initial memory,1

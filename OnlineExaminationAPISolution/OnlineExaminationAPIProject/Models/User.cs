@@ -25,12 +25,13 @@ namespace OnlineExaminationAPIProject.Models
         public int Id { get; set; }
         [DataMember]
         public string FullName { get; set; }
-        [DataMember]
         public string Email { get; set; }
-        public byte[] Password { get; set; }
+        public string Password { get; set; }
         public System.DateTime DOB { get; set; }
         public string Contact { get; set; }
+        [DataMember]
         public string City { get; set; }
+        [DataMember]
         public string State { get; set; }
         public string HighestQualification { get; set; }
         public int CompletionYear { get; set; }

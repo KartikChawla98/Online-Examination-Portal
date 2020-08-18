@@ -18,126 +18,137 @@ namespace OnlineExaminationAPIProject.Controllers
     [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class TestStructuresController : ApiController
     {
-        private db_OnlineExaminationEntities db = new db_OnlineExaminationEntities();
 
         //Admin - All Test Structures
         [HttpGet]
         public List<TestStructure> GetAllTestStructures()
         {
-            //If Admin
-            return db.TestStructures.Where(ts => ts.IsCurrent == true).ToList();
+            using (db_OnlineExaminationEntities db = new db_OnlineExaminationEntities())
+            {
+                //If Admin
+                return db.TestStructures.Where(ts => ts.IsCurrent == true).ToList();
+            }
         }
         //User - Test Options
         [HttpGet]
         public List<TestStructure> GetTestOptions(int UserId)
         {
-            List<TestStructure> testOptions = db.TestStructures.Where(ts => ts.IsCurrent == true).ToList();
-            List<Test> userTests = db.Tests.Where(t => t.UserId == UserId && t.TestStructure.IsCurrent == true &&
-                                                 t.Result == true).ToList();
-            foreach (Test test in userTests)
-               testOptions.Remove(test.TestStructure);
-            var testGroup = testOptions.GroupBy(t => t.Technology);
-            foreach (var groupItem in testGroup)
+            using (db_OnlineExaminationEntities db = new db_OnlineExaminationEntities())
             {
-                foreach (TestStructure structure in groupItem)
+                List<TestStructure> testOptions = db.TestStructures.Where(ts => ts.IsCurrent == true).ToList();
+                List<Test> userTests = db.Tests.Where(t => t.UserId == UserId && t.TestStructure.IsCurrent == true &&
+                                                     t.Result == true).ToList();
+                foreach (Test test in userTests)
+                    testOptions.Remove(test.TestStructure);
+                var testGroup = testOptions.GroupBy(t => t.Technology);
+                foreach (var groupItem in testGroup)
                 {
-                    testOptions.Remove(testOptions.Find(t => t.Technology == structure.Technology && t.Level > structure.Level));
+                    foreach (TestStructure structure in groupItem)
+                    {
+                        testOptions.Remove(testOptions.Find(t => t.Technology == structure.Technology && t.Level > structure.Level));
+                    }
                 }
+                return testOptions;
             }
-            return testOptions;
         }
 
         [HttpPut]
         [ResponseType(typeof(void))]
         public IHttpActionResult UpdateTestStructure(int AdminId, TestStructure testStructure)
         {
-            TestStructure oldData = db.TestStructures.AsNoTracking().Where(ts => ts.Id == testStructure.Id).FirstOrDefault();
-            if (oldData == null || !oldData.IsCurrent)
+            using (db_OnlineExaminationEntities db = new db_OnlineExaminationEntities())
             {
-                return NotFound();
-            }
-            if (testStructure.SetProperties(AdminId: AdminId))
-            {
-                db.Entry(testStructure).State = EntityState.Modified;
-                try
+                TestStructure oldData = db.TestStructures.AsNoTracking().Where(ts => ts.Id == testStructure.Id).FirstOrDefault();
+                if (oldData == null || !oldData.IsCurrent)
                 {
-                    db.SaveChanges();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                if (testStructure.SetProperties(AdminId: AdminId))
                 {
-                    if (!TestStructureExists(testStructure.Id))
+                    db.Entry(testStructure).State = EntityState.Modified;
+                    try
                     {
-                        return NotFound();
+                        db.SaveChanges();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!TestStructureExists(testStructure.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return Ok(testStructure);
                 }
-                return Ok(testStructure);
-            }
-            return BadRequest();
+                return BadRequest();
+            }  
         }
         [HttpPost]
         [ResponseType(typeof(TestStructure))]
         public IHttpActionResult AddTestStructure(int AdminId, TestStructure testStructure)
         {
-            if (TestStructureExists(testStructure.Technology, testStructure.Level))
+            using (db_OnlineExaminationEntities db = new db_OnlineExaminationEntities())
             {
-                return Ok(new TestStructure());
-            }
-            if (testStructure.SetProperties(AdminId: AdminId))
-            {
-                db.TestStructures.Add(testStructure);
-                try
+                if (TestStructureExists(testStructure.Technology, testStructure.Level))
                 {
-                    db.SaveChanges();
+                    return Ok(new TestStructure());
                 }
-                catch (DbUpdateException)
+                if (testStructure.SetProperties(AdminId: AdminId))
                 {
-                    if (TestStructureExists(testStructure.Id))
+                    db.TestStructures.Add(testStructure);
+                    try
                     {
-                        return Conflict();
+                        db.SaveChanges();
                     }
-                    else
+                    catch (DbUpdateException)
                     {
-                        throw;
+                        if (TestStructureExists(testStructure.Id))
+                        {
+                            return Conflict();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return CreatedAtRoute("DefaultApi", new { id = testStructure.Id }, testStructure);
                 }
-                return CreatedAtRoute("DefaultApi", new { id = testStructure.Id }, testStructure);
-            }
-            return BadRequest();
+                return BadRequest();
+            }  
         }
         [HttpDelete]
         [ResponseType(typeof(TestStructure))]
         public IHttpActionResult DeleteTestStructure(int AdminId, int TestStructureId)
         {
-            TestStructure testStructure = db.TestStructures.Find(TestStructureId);                              
-            if (testStructure == null || !testStructure.IsCurrent)
+            using (db_OnlineExaminationEntities db = new db_OnlineExaminationEntities())
             {
-                return NotFound();
+                TestStructure testStructure = db.TestStructures.Find(TestStructureId);
+                if (testStructure == null || !testStructure.IsCurrent)
+                {
+                    return NotFound();
+                }
+                testStructure.SetProperties(AdminId: AdminId, IsCurrent: false/*, SetNumberOfQuestions: false*/);
+                db.SaveChanges();
+                return Ok(testStructure);
             }
-            testStructure.SetProperties(AdminId: AdminId, IsCurrent: false/*, SetNumberOfQuestions: false*/);
-            db.SaveChanges();
-            return Ok(testStructure);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
 
         private bool TestStructureExists(int id)
         {
-            return db.TestStructures.Count(t => t.Id == id) > 0;
+            using (db_OnlineExaminationEntities db = new db_OnlineExaminationEntities())
+            {
+                return db.TestStructures.Count(t => t.Id == id) > 0;
+            } 
         }
         private bool TestStructureExists(string Technology, int Level)
         {
-            return db.TestStructures.Count(t => t.Technology == Technology && t.Level == Level && t.IsCurrent == true) > 0;
+            using (db_OnlineExaminationEntities db = new db_OnlineExaminationEntities())
+            {
+                return db.TestStructures.Count(t => t.Technology == Technology && t.Level == Level && t.IsCurrent == true) > 0;
+            }   
         }
     }
 }

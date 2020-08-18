@@ -41,7 +41,7 @@
                 </div>
             </div>
             <button type="button" class="btn btn-secondary but" (click)="clearAddDetails()">Reset</button>
-            <button type="submit" class="btn btn-success but">Add Structure</button>
+            <button [disabled]="!myAddForm.valid" type="submit" class="btn btn-success but">Add Structure</button>
         </form>
         <p class="inp" *ngIf="newStructure">
             <br/>
@@ -88,8 +88,8 @@
                 </div>
             </div>
             <button type="button" class="btn btn-secondary but" (click)="clearUpdateDetails()">Reset</button>
-            <button type="submit" class="btn btn-success but">Edit Structure</button>
-            <button type="button" class="btn btn-danger but" (click)="removeStructure()">Remove Structure</button><br/>
+            <button [disabled]="!myUpdateForm.valid" type="submit" class="btn btn-success but">Edit Structure</button>
+            <button type="button" class="btn btn-danger go-right" style="margin-top: 1%;" (click)="removeStructure()">Remove Structure</button><br/>
         </form>
         <p *ngIf="updatedStructure">
             <br/>

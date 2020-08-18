@@ -1,0 +1,92 @@
+<div class="container">
+    <h1>Register</h1><br/>
+    <div class="alert alert-danger" *ngIf="showError">
+        <span>{{showError}}</span>
+    </div>
+    <form [formGroup]="myForm" (ngSubmit)="tryRegister()">
+        <div class="inp">
+            <label for="nameInput">Full Name:</label>
+            <input type="text" class="form-control" id="nameInput" placeholder="Full Name" formControlName="name">
+            <div class="alert alert-danger" *ngIf="name.touched && name.invalid">
+                <span *ngIf="name.errors.required">Name cannot be empty</span>
+            </div>
+        </div>
+        <div class="inp">
+            <label for="emailInput">Email:</label>
+            <input type="email" class="form-control" id="emailInput" placeholder="xyz@gmail.com" formControlName="email">
+            <div class="alert alert-danger" *ngIf="email.touched && email.invalid">
+                <span *ngIf="email.errors.required">Email cannot be empty</span>
+            </div>
+        </div>
+        <div class="inp">
+            <label for="passwordInput">Password:</label>
+            <input type="password" class="form-control" id="passwordInput" placeholder="Password" formControlName="password">
+            <div class="alert alert-danger" *ngIf="password.touched && password.invalid">
+                <span *ngIf="password.errors.required">Password cannot be empty</span>
+                <span *ngIf="password.errors.minlength">Password cannot be less than 6 characters</span>
+                <span *ngIf="password.errors.maxlength">Password cannot be more than 12 characters</span>
+            </div>
+        </div>
+        <div class="inp">
+            <label for="repasswordInput">Re-enter Password:</label>
+            <input type="password" class="form-control" id="repasswordInput" placeholder="Confirm Password" formControlName="repassword">
+            <div class="alert alert-danger" *ngIf="repassword.touched && repassword.invalid">
+                <span *ngIf="repassword.errors.required">Password cannot be empty</span>
+                <span *ngIf="repassword.errors.minlength">Password cannot be less than 6 characters</span>
+                <span *ngIf="repassword.errors.maxlength">Password cannot be more than 12 characters</span>
+            </div>
+        </div>
+        <div class="inp">
+            <label for="DOBInput">DOB:</label>
+            <input type="date" class="form-control" id="DOBInput" placeholder="DOB" formControlName="dob">
+            <div class="alert alert-danger" *ngIf="dob.touched && dob.invalid">
+                <span *ngIf="dob.errors.required">DOB cannot be empty</span>
+            </div>
+        </div>
+        <div class="inp">
+            <label for="contactInput">Contact:</label>
+            <input type="text" class="form-control" id="contactInput" placeholder="Contact" formControlName="contact">
+            <div class="alert alert-danger" *ngIf="contact.touched && contact.invalid">
+                <span *ngIf="contact.errors.required">Contact cannot be empty</span>
+                <span *ngIf="contact.errors.pattern">Contact cannot contain non-numeric values<br/></span>
+                <span *ngIf="contact.errors.minlength">Contact cannot be less than 7 digits</span>
+                <span *ngIf="contact.errors.maxlength">Contact cannot be more than 13 digits</span>
+            </div>
+        </div>
+        <div class="inp">
+            <label for="cityInput">City:</label>
+            <input type="text" class="form-control" id="cityInput" placeholder="City" formControlName="city">
+            <div class="alert alert-danger" *ngIf="city.touched && city.invalid">
+                <span *ngIf="city.errors.required">City cannot be empty</span>
+            </div>
+        </div>
+        <div class="inp">
+            <label for="stateInput">State:</label>
+            <input type="text" class="form-control" id="stateInput" placeholder="State" formControlName="state">
+            <div class="alert alert-danger" *ngIf="state.touched && state.invalid">
+                <span *ngIf="state.errors.required">State cannot be empty</span>
+            </div>
+        </div>
+        <div class="inp">
+            <label for="qualificationInputInput">Highest Qualification:</label>
+            <input type="text" class="form-control" id="qualificationInputInput" placeholder="Highest Qualification" formControlName="qualification">
+            <div class="alert alert-danger" *ngIf="qualification.touched && qualification.invalid">
+                <span *ngIf="qualification.errors.required">Highest Qualification cannot be empty</span>
+            </div>
+        </div>
+        <div class="inp">
+            <label for="yearInput">Completion Year:</label>
+            <input type="number" class="form-control" id="yearInput" placeholder="Completion Year" formControlName="year" min="1950" [max]="currYear">
+            <div class="alert alert-danger" *ngIf="year.touched && year.invalid">
+                <span *ngIf="year.errors.required">Year cannot be empty</span>
+                <span *ngIf="year.errors.max">Year cannot be greater than current Year</span>
+                <span *ngIf="year.errors.min">Year cannot be less than 1950</span>
+            </div>
+        </div>
+        <button type="button" class="btn btn-secondary but" (click)="clearDetails()">Reset</button>
+        <button [disabled]="!myForm.valid" type="submit" class="btn btn-primary but">Register</button>
+        <br/>
+    </form>
+</div>
+
+

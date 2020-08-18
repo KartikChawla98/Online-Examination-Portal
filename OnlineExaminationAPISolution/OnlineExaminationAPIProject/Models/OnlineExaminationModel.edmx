@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="db_OnlineExaminationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="db_OnlineExaminationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admins">
           <Key>
             <PropertyRef Name="Id" />
@@ -34,10 +34,10 @@
           <Property Name="Technology" Type="nvarchar" MaxLength="60" Nullable="false" />
           <Property Name="Level" Type="int" Nullable="false" />
           <Property Name="QuestionString" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="Option1" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Option2" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Option3" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Option4" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Option1" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Option2" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Option3" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Option4" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="CorrectOption" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TestQuestions">
@@ -82,7 +82,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="60" Nullable="false" />
-          <Property Name="Password" Type="binary" MaxLength="64" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="DOB" Type="date" Nullable="false" />
           <Property Name="Contact" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="City" Type="nvarchar" MaxLength="20" Nullable="false" />
@@ -211,7 +211,8 @@
             <End Role="Tests" EntitySet="Tests" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="db_OnlineExaminationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -248,10 +249,10 @@
           <Property Name="Technology" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Level" Type="Int32" Nullable="false" />
           <Property Name="QuestionString" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Option1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Option2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Option3" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Option4" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Option1" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Option2" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Option3" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Option4" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CorrectOption" Type="Int32" Nullable="false" />
           <NavigationProperty Name="QuestionFile" Relationship="Self.QuestionFileQuestion" FromRole="Questions" ToRole="QuestionFiles" />
           <NavigationProperty Name="TestQuestions" Relationship="Self.QuestionTestQuestion" FromRole="Questions" ToRole="TestQuestions" />
@@ -305,7 +306,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FullName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="Binary" MaxLength="64" FixedLength="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Contact" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />

@@ -45,7 +45,8 @@ namespace OnlineExaminationAPIProject.Models
 
         public bool SetProperties(int AdminId, bool IsCurrent = true/*, bool SetNumberOfQuestions = true*/)
         {
-            try {
+            try
+            {
                 if (this.Level < 1 || this.Level > 3)
                     return false;
                 //if (SetNumberOfQuestions)

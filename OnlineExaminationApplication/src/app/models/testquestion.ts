@@ -8,6 +8,7 @@ export class Question {
         public Option2?: string,
         public Option3?: string,
         public Option4?: string,
+        public CorrectOption?: number
     ) {}
 }
 export class TestQuestion {

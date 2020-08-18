@@ -18,22 +18,13 @@ namespace OnlineExaminationAPIProject.Controllers
     {
         private db_OnlineExaminationEntities db = new db_OnlineExaminationEntities();
 
-        // GET: api/Tests
-        public IQueryable<Test> GetTests()
+        [HttpGet]
+        [ResponseType(typeof(List<TestQuestion>))]
+        public IHttpActionResult ResumeTest(int id)
         {
-            return db.Tests;
-        }
-
-        // GET: api/Tests/5
-        [ResponseType(typeof(Test))]
-        public IHttpActionResult GetTest(int id)
-        {
-            Test test = db.Tests.Find(id);
-            if (test == null)
-            {
+            if (db.Tests.Find(id) == null)
                 return NotFound();
-            }
-            return Ok(test);
+            return Ok(db.TestQuestions.Where(tq => tq.TestId == id).ToList());
         }
         [HttpPut]
         [ResponseType(typeof(void))]
@@ -82,8 +73,9 @@ namespace OnlineExaminationAPIProject.Controllers
             if (questions.Count == 0)
             {
                 db.Tests.Remove(test);
+                db.SaveChanges();
                 return Ok(new List<TestQuestion>());
-            }    
+            }
             for (int i = 0; i < testStructure.NumberOfQuestions; i++)
             {
                 TestQuestion testQuestion = new TestQuestion();
@@ -95,20 +87,6 @@ namespace OnlineExaminationAPIProject.Controllers
             test.EndTime = test.StartTime.Value.AddMinutes(testStructure.MaxMinutes);
             db.SaveChanges();
             return CreatedAtRoute("DefaultApi", new { id = test.Id }, db.TestQuestions.Where(tq => tq.TestId == test.Id).ToList());
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool TestExists(int id)
-        {
-            return db.Tests.Count(t => t.Id == id && t.EndTime >= System.DateTime.Now) > 0;
         }
     }
 }

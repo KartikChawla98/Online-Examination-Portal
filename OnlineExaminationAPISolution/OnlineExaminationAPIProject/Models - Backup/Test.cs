@@ -26,15 +26,17 @@ namespace OnlineExaminationAPIProject.Models
         public int UserId { get; set; }
         public int TestStructureId { get; set; }
         [DataMember]
-        public System.DateTime StartTime { get; set; }
+        public Nullable<System.DateTime> StartTime { get; set; }
         [DataMember]
-        public System.DateTime EndTime { get; set; }
+        public Nullable<System.DateTime> EndTime { get; set; }
         [DataMember]
         public Nullable<int> Score { get; set; }
+        [DataMember]
         public Nullable<bool> Result { get; set; }
-
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }
+        [DataMember]
         public virtual TestStructure TestStructure { get; set; }
         public virtual User User { get; set; }
 
@@ -42,11 +44,6 @@ namespace OnlineExaminationAPIProject.Models
         {
             this.UserId = UserId;
             this.TestStructureId = TestStructureId;
-            this.StartTime = System.DateTime.Now;
-            using (db_OnlineExaminationEntities db = new db_OnlineExaminationEntities())
-            {
-                this.EndTime = this.StartTime.AddMinutes(db.TestStructures.Find(this.TestStructureId).MaxMinutes);
-            }
         }
     }
 }

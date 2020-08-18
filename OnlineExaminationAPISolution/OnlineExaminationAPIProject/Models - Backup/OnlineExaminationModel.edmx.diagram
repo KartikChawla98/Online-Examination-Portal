@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0a742b6eb682451790c858170cde0fb0" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.Admin" Width="1.5" PointX="0.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.QuestionFile" Width="1.5" PointX="9.875" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.Question" Width="1.5" PointX="9.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.TestQuestion" Width="1.5" PointX="7.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.Test" Width="1.5" PointX="4.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.TestStructure" Width="1.5" PointX="4.625" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_OnlineExaminationModel.User" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="db_OnlineExaminationModel.AdminQuestionFile" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OnlineExaminationModel.AdminTestStructure" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OnlineExaminationModel.QuestionFileQuestion" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OnlineExaminationModel.QuestionTestQuestion" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OnlineExaminationModel.TestTestQuestion" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OnlineExaminationModel.TestStructureTest" ManuallyRouted="false" />
+        <AssociationConnector Association="db_OnlineExaminationModel.UserTest" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

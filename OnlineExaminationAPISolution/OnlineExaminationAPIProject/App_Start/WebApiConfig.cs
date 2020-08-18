@@ -11,7 +11,8 @@ namespace OnlineExaminationAPIProject
         {
             // Web API configuration and services
             config.EnableCors();
-
+            //config.Formatters.Remove(config.Formatters.XmlFormatter);
+            //config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             // Web API routes
             config.MapHttpAttributeRoutes();
 

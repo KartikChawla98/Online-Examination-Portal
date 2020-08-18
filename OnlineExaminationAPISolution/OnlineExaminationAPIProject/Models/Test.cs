@@ -33,10 +33,13 @@ namespace OnlineExaminationAPIProject.Models
         public Nullable<int> Score { get; set; }
         [DataMember]
         public Nullable<bool> Result { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [DataMember]
         public virtual ICollection<TestQuestion> TestQuestions { get; set; }
+        [DataMember]
         public virtual TestStructure TestStructure { get; set; }
+        [DataMember]
         public virtual User User { get; set; }
 
         public void SetProperties(int UserId, int TestStructureId)

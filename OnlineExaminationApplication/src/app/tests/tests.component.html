@@ -33,18 +33,19 @@
         <button [disabled]="!showingStart" (click)="startTest()" class="btn btn-primary but">Start Test</button><br/>
     </div>
     <div *ngIf="testQuestions" class="go-left">
-        <div class="btn-group go-center" role="group" aria-label="Questions">
-            <button *ngFor="let testQuestion of testQuestions; let i = index;" (click)="currentQuestion=i" type="button" class="btn" [ngClass]="{'btn-info': currentQuestion==i,'btn-success': currentAnswers[i],'btn-secondary': !currentAnswers[i]}">{{i+1}}</button>
+        <div class="btn-group" role="group" aria-label="Questions">
+            <button *ngFor="let testQuestion of testQuestions; let i = index;" (click)="currentQuestion=i" type="button" class="btn float-left" [ngClass]="{'btn-info': currentQuestion==i,'btn-success': currentAnswers[i],'btn-secondary': !currentAnswers[i]}">{{i+1}}</button>
         </div>
+        <button *ngIf="timeLeft" class="btn btn-warning go-right" [ngClass]="{'btn-danger': timeLeft<60000}">{{timeLeft | date: 'mm:ss':'UTC'}}</button> 
         <ul class="list-group">
             <ng-container *ngFor="let testQuestion of testQuestions; let i = index">
                 <li *ngIf="currentQuestion==i" class="list-group-item list-group-item-secondary">
                     <h2>{{i+1}}. {{testQuestion.Question.QuestionString}}</h2><br>
                     <mat-radio-group (change)="changeUserAnswer($event, i)">
-                        <mat-radio-button value="1" [checked]="currentAnswers[i]=='1'" class="lead">{{testQuestion.Question.Option1}}</mat-radio-button><br/>
-                        <mat-radio-button value="2" [checked]="currentAnswers[i]=='2'" class="lead">{{testQuestion.Question.Option2}}</mat-radio-button><br/>
-                        <mat-radio-button value="3" [checked]="currentAnswers[i]=='3'" class="lead">{{testQuestion.Question.Option3}}</mat-radio-button><br/>
-                        <mat-radio-button value="4" [checked]="currentAnswers[i]=='4'" class="lead">{{testQuestion.Question.Option4}}</mat-radio-button><br/>
+                        <mat-radio-button value="1" [checked]="currentAnswers[i]==1" class="lead">{{testQuestion.Question.Option1}}</mat-radio-button><br/>
+                        <mat-radio-button value="2" [checked]="currentAnswers[i]==2" class="lead">{{testQuestion.Question.Option2}}</mat-radio-button><br/>
+                        <mat-radio-button value="3" [checked]="currentAnswers[i]==3" class="lead">{{testQuestion.Question.Option3}}</mat-radio-button><br/>
+                        <mat-radio-button value="4" [checked]="currentAnswers[i]==4" class="lead">{{testQuestion.Question.Option4}}</mat-radio-button><br/>
                     </mat-radio-group>
                 </li>
             </ng-container>
@@ -53,7 +54,7 @@
         <br/>
         <button [disabled]="currentQuestion==0" (click)="changeCounter(-1)" class="btn btn-secondary but">Previous</button>
         <button [disabled]="currentQuestion==selectStructure.NumberOfQuestions-1" (click)="changeCounter(1)" class="btn btn-primary but">Next</button>
-        <button (click)="finishTest()" class="btn btn-danger but go-right">End Test</button>
+        <button (click)="finishTest()" class="btn btn-danger go-right">End Test</button>
     </div>
     <div *ngIf="showError" class="alert alert-danger">
         <span>{{showError}}</span><br/>

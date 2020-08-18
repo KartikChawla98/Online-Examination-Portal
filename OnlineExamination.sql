@@ -6,7 +6,7 @@ create table Users
  Id int identity(1,1) primary key,
  FullName nvarchar(40) not null,
  Email nvarchar(60) unique not null,
- Password Binary(64) not null,
+ Password nvarchar(256) not null,
  DOB Date not null,
  Contact nvarchar(15) not null,
  City nvarchar(20) not null,
@@ -40,10 +40,10 @@ create table Questions
  Technology nvarchar(60) not null,
  Level int not null,
  QuestionString nvarchar(500) not null,
- Option1 nvarchar(100) not null,
- Option2 nvarchar(100) not null,
- Option3 nvarchar(100) not null,
- Option4 nvarchar(100) not null,
+ Option1 nvarchar(300) not null,
+ Option2 nvarchar(300) not null,
+ Option3 nvarchar(300) not null,
+ Option4 nvarchar(300) not null,
  CorrectOption int not null,
  )
 
@@ -80,13 +80,10 @@ create Table TestQuestions
  UserAnswer int
  )
 
-insert into Users values
-('Ganesh Dhingra', 'kartikchawla101@gmail.com', HASHBYTES('SHA2_512','123456'), '1998-08-17', '9582225801', 'Faridabad', 'Haryana', 'B.Tech.', 2020)
-select * from Users
-
 insert into Admins values 
 ('kartikchawla101@gmail.com', HASHBYTES('SHA2_512','123456'), 'Kartik Chawla', '9582225801')
 select * from Admins
+select * from Users
 
 -- disable constraints
 EXEC sp_MSForEachTable "ALTER TABLE ? NOCHECK CONSTRAINT all"

@@ -1,0 +1,11 @@
+Project - Title
+Project
+ Objective - 1 slide
+ Screen shots of the working - 5 slides
+ Database diagram - 1 slide
+PrjectMaking - Title
+Making of the project
+  Scrum Boards - 3 slides
+  Issues  
+    max 5 issues - 2 slide
+    Learnt new - max 5 - 1 slide

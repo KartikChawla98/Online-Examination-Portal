@@ -1,0 +1,160 @@
+Technology,Level,Question,Option 1,Option 2,Option 3,Option 4,Correct Option
+Java,1,Which of the following is a type of polymorphism in Java?,Compile time polymorphism, Execution time polymorphism,Multiple polymorphism, Multilevel polymorphism,1
+Java,1,Which concept of Java is achieved by combining methods and attribute into a class?,Encapsulation,Inheritance,Polymorphism,Abstraction,1
+Java,1,"Which component is used to compile, debug and execute java program?",JVM,JDK,JRE,JIT,2
+Java,1, Which statement is true about java?, Platform independent programming language,Platform dependent programming language, Code dependent programming language,Sequence dependent programming language,1
+Java,1,What is use of interpreter?,They convert bytecode to machine language code,They read high level code and execute them,They are intermediated between JIT and JVM,It is a synonym for JIT,2
+Java,1,What is the process of defining more than one method in a class differentiated by method signature?, Function overriding,Function doubling,Function overloading, None of the mentioned,3
+Java,1,Which keyword is used by the method to refer to the object that invoked it?, import,catch,abstract,this,4
+Java,1,Which operator is used by Java run time implementations to free the memory of an object when it is no longer needed?,delete, free,new, none of the mentioned,4
+Java,1, Which function is used to perform some action when the object is to be destroyed?,delete(),main(),finalize(),none of the mentioned,3
+Java,1,What is the return type of Constructors?,int,float,void, none of the mentioned,4
+Java,1,Which of these method of String class is used to obtain character at specified index?,char(), Charat(),charat(), charAt(),4
+Java,1,. Which of these keywords is used to refer to member of base class from a subclass?,upper, super, this,none of the mentioned,2
+Java,1, Which of the following statements are incorrect?,Every string is an object of class String,"Java defines a peer class of String, called StringBuffer, which allows string to be altered",Strings in java are mutable,String is a class,3
+Java,1,Where is a new object allocated memory?,Young space,Old space,Young or Old space depending on space availability, JVM,1
+Java,2, What is -Xms and -Xmx while starting jvm?,Initial; Maximum memory,Maximum; Initial memory,Maximum memory, Initial memory,1
+Java,2,How to get prints of shared object memory maps or heap memory maps for a given process?,memorypath,memorymap,jmap, jvmmap,3
+Java,2,Which of the below is not a memory leak solution?, JVM parameter tuning, Process restart,GC parameter tuning,Code changes,2
+Java,2,Which of the below is not a Java Profiler?,JVM,JConsole,JProfiler,Eclipse Profiler,1
+Java,2,Which class allows parsing of command line arguments?,Args,Command Line, Input, JCommander,4
+Java,2,Which annotation is used to represent command line input and assigned to correct data type?,@Variable,@Input,@Command Line,@Parameter,4
+Java,2, Which of these data types is used to store command line arguments?,Stack,String,Integer,Array,2
+Java,2, How many arguments can be passed to main()?,System Dependent, Only 1, Infinite, None of the mentioned,3
+Java,2,Which of these data types is used by operating system to manage the Recursion in Java?, Array,Stack,Queue,Tree,2
+Java,2, Which of these packages contains the exception Stack Overflow in Java?,java.lang,java.util,java.io,java.system,1
+Java,2,Which of these method of Object class can clone an object?, Objectcopy(), Object clone(),copy(),clone(),2
+Java,2,Which of these keywords cannot be used for a class which has been declared final?,abstract,extends,abstract and extends,none of the mentioned,1
+Java,2, Which of these class relies upon its subclasses for complete implementation of its methods?,abstract class,ArrayList class,Object class,None of the mentioned,1
+Java,2, A class member declared protected becomes a member of subclass of which type?, public member,private member,protected member,static member,2
+Java,2," Using which of the following, multiple inheritance in Java can be implemented?",Multithreading, Interfaces,Private methods,Protected methods,2
+Java,3, Which of these interface extends DataOutput interface?, ObjectOutput,ObjectInput,Externalization,Serializable,1
+Java,3,Which of these is method of ObjectOutput interface used to write the object to input or output stream as required?, Write(), StreamWrite(),writeObject(),write(),3
+Java,3, Which of these methods of httpd class is used to read data from the stream?,getData(),GetResponse(),getStream(),getRawRequest(),4
+Java,3,Which of these methods are used to find a URL from the cache of httpd?, findFromCache(),findfromCache(),serveFromCache(),getFromCache(),3
+Java,3,Which of these class is used to create servers that listen for either local or remote client programs?,ServerSockets,MimeHeader,httpServer,HttpResponse,1
+Java,3,Which of these methods is used to make raw MIME formatted string?,toString(), getString(),parseString(),parse(),4
+Java,3,Which of these interface declares core method that all collections will have?, EventListner,set,Comparator, Collection,4
+Java,3,Which of these is static variable defined in Collections?,EMPTY_LIST,EMPTY_SET,EMPTY_MAP,All of the mentioned,4
+Java,3,Which of these is a class which uses String as a key to store the value in object?, HashMap,Hashtable, Enumeration,Map,4
+Java,3,Which of these methods is used to retrieve the elements in properties object at specific location?,getProperty(),ElementAt(),Elementat(),get(),1
+Python,1, Is Python case sensitive when dealing with identifiers?, Yes,No,Machine dependent,None of the above,1
+Python,1, Which of the following is not a keyword?,assert,eval,pass,nonlocal,2
+Python,1,Which of these in not a core data type?,List ,Dictionary,Tuples,Class,4
+Python,1,In order to store values in terms of key and value we use what core data type.,Dictionary,List,Tuples,Class,1
+Python,1,Which is the correct operator for power(xy)?,X^y, X**y, X^^y,None of the mentioned,2
+Python,1,Mathematical operations can be performed on a string.,TRUE,FALSE, Can’t say,None of the mentioned,2
+Python,1, Operators with the same precedence are evaluated in which manner?, Left to Right,Right to Left, Can’t say,None of the mentioned,1
+Python,1,Which one of the following has the highest precedence in the expression?,Exponential,Addition,Multiplication,Parentheses,4
+Python,1,"What is the result of cmp(3, 1)?",1,0,TRUE,FALSE,1
+Python,1,The one’s complement of 110010101 is:, 001101010,110010101,1101011,110010100,1
+Python,1,Bitwise _________ gives 1 if either of the bits is 1 and 0 when both of the bits are 1.,OR,AND,XOR,NOT,3
+Python,1,"To find the decimal value of 1111, that is 15, we can use the function:"," int(1111,10)","int(‘1111’,10)"," int(1111,2)","int(‘1111’,2)",4
+Python,1,"What will be the output of the following Python statement? >>>""abcd""[2:]",a,ab,cd,dc,3
+Python,1,What arithmetic operators cannot be used with strings?,+',-',*,None of the mentioned,3
+Python,1,The output of executing string.ascii_letters can also be achieved by:,string.ascii_lowercase_string.digits,string.ascii_lowercase+string.ascii_upercase,string.letters,string.lowercase_string.upercase,2
+Python,2,What will be the output of the following Python statement? >>>print('new' 'line'),Error, Output equivalent to print ‘new\nline’, newline,new line,3
+Python,2," What will be the output of the following Python code snippet? print('abcdefcdghcd'.split('cd', 2))"," [‘ab’, ‘ef’, ‘ghcd’]","[‘ab’, ‘efcdghcd’]","[‘abcdef’, ‘ghcd’]", none of the mentioned,1
+Python,2, What will be the output of the following Python code snippet? print('ab cd ef'.title()),Ab cd ef,Ab cd eF,Ab Cd Ef,None of the mentioned,3
+Python,2,What will be the output of the following Python code snippet? print('ab'.zfill(5)),000ab,00ab0,0ab00,ab000,1
+Python,2,What is called when a function is defined inside a class?,Module,Class,Method,Another Function,3
+Python,2,Which module in Python supports regular expressions?,re,regex,pyregex,Noe of the mentioned,1
+Python,2,"Given a string s = “Welcome”, which of the following code is incorrect?",print s[0],print s.lower,s[1]='r',print s.strip,3
+Python,2,"To start Python from the command prompt, use the command ______",execute python,go python,python,run python,3
+Python,2,________ is a simple but incomplete version of a function.,stub,function,function developed using bottom up approach,a function developed using top up approach,1
+Python,2,Which of the following is correct about Python?,Supports automatic garbage collection,"can be easily integrated with c, c++, java",None of the above,Both of the above,4
+Python,2,"What data type is the object below ? L = [1, 23, ‘hello’, 1]",List ,Dictionary,Tuple,Array,1
+Python,2,Which keyword is use for function?,func,def,function,define,2
+Python,2,Which one of the following is the correct way of calling a function?, function_name(),call function_name(),ret function_name(), function function_name(),1
+Python,2,Which of the following function headers is correct?,"def fun(a = 2, b = 3, c)","def fun(a = 2, b, c = 3)","def fun(a, b = 2, c = 3)","def fun(a, b, c = 3, d)",3
+Python,2,Which of the following is the use of id() function in python?,Id() returns the size of object.,Id() returns the identity of the object.,Both A and B, None of the above,2
+Python,3,What is a recursive function?,A function that calls other function,A function which calls itself.,Both A and B, None of the above,2
+Python,3," If return statement is not used inside the function, the function will return:", None,0,Null,Arbitary value,1
+Python,3,Which of the following is False regarding loops in Python?,Loops are used to perform certain tasks repeatedly.,While loop is used when multiple statements are to executed repeatedly until the given condition becomes False, While loop is used when multiple statements are to executed repeatedly until the given condition becomes True.,for loop can be used to iterate through the elements of lists.,2
+Python,3,Which of the following is True regarding loops in Python?,"Loops should be ended with keyword ""end"".",No loop can be used to iterate through the elements of strings.," Keyword ""break"" can be used to bring control out of the current loop.","Keyword ""continue"" is used to continue with the remaining statements inside the loop.",3
+Python,3,"In a Python program, a control structure:",Defines program-specific data structures,Directs the order of execution of the statements in the program,Dictates what happens before the program starts and after it terminates,None of the above,2
+Python,3,Does python have switch case statement?,Yes,No,Python has switch statement but we can not use it.,Noe of the mentioned,2
+Python,3,"In Python, how are arguments passed?",pass by value,pass by reference,It gives options to user to choose,None of the above,2
+Python,3,Which of the following is not a type of argument in Python?,Keyword,Variable argument count,Positional,None of these,4
+Python,3,Which of the following is the property of variable argument count?, More than one argument can be used while calling the function., It should be always last while declaring the arguments.,Both A and B,None of these,3
+Python,3, Which of the following is False?,String is immutable.,capitalize() function in string is used to return a string by converting the whole given string into uppercase., lower() function in string is used to return a string by converting the whole given string into lowercase., None of these.,2
+C#,1,The capability of an object in Csharp to take number of different forms and hence display behaviour as according is known as ___________,Encapsulation,Polymorphism,Abstraction,None of the mentioned,2
+C#,1,Which of the following keyword is used to change data and behavior of a base class by replacing a member of the base class with a new derived member?, Overloads,Overrides,new,base,3
+C#,1,. Correct way to overload +operator?,"public sample operator + (sample a, sample b)","public abstract operator + (sample a,sample b)","public static sample operator + (sample a, sample b)",all of the mentioned,4
+C#,1, Which of the following statements is correct?, Each derived class does not have its own version of a virtual method, If a derived class does not have its own version of virtual method then one in base class is used,By default methods are virtual,All of the mentioned,3
+C#,1,"Selecting appropriate method out of number of overloaded methods by matching arguments in terms of number, type and order and binding that selected method to object at compile time is called?",Static binding,Static Linking, Compile time polymorphism, All of the mentioned,4
+C#,1,Wrong statement about run time polymorphism is?,"The overridden base method should be virtual, abstract or override", An abstract method is implicitly a virtual method,An abstract inherited property cannot be overridden in a derived class,Both override method and virtual method must have same access level modifier,3
+C#,1,Select the wrong statements among the following?,A structure can contain properties,A structure can contain constructors,A structure can contain protected data members, A structure can contain constants,3
+C#,1,Which keyword is used to refer baseclass constructor to subclass constructor?,This,static,Base,Extend,3
+C#,1,What is the advantage of using 2D jagged array over 2D rectangular array?,Easy initialization of elements,Allows unlimited elements as well as rows which had ‘0’ or are empty in nature,All of the mentioned,None of the mentioned,2
+C#,1,Which of these is used as a default specifier for a member of the class if no access specifier is used for it?,Public,Private,Protected," public, within its own class",2
+C#,1,Which of these is used to access members of class before the object of that class is created?,Private,Public,static,Protected,3
+C#,1, Which of these base classes are accessible to the derived class members?,Static binding,protected,private,shared,2
+C#,1,What is the process by which we can control parts of a program that can access the members of a class?, Encapsulation,Polymorphism,Abstraction,Recursion,1
+C#,1, Accessibility modifier defined in a class are?,"public, private, protected","public, internal, protected internal","public, private, internal, protected internal","public, private, protected, internal, protected internal",4
+C#,1,Choose the statements which are false in nature?,The base class member functions can access public member functions of derived class,An object of a derived class cannot access private member of the base class,Private members of the base class cannot be accessed by derived class member functions or objects of derived class,None of the mentioned,1
+C#,2," When we call a constructor method among different given constructors. We match the suitable constructor by matching the name of constructor first, then the number and then the type of parameters to decide which constructor is to be overloaded. The process is also known as?",Method overriding,Polymorphism,Inheritance,Encapsulation,2
+C#,2,Correct statement about constructor overloading in C# is?, Overloaded constructors can have different type of number of arguments as well as differ in number of arguments,Overloaded constructors cannot use optional arguments,Overloaded constructors have the same name as the class, All of the mentioned,1
+C#,2,Choose selective differences between an array in c# and array in other programming languages.,Declaring array in C# the square bracket([]) comes after the type but not after identifier,It is necessary to declare size of an array with its type,No difference between declaration of array in c# as well as in other programming languages,All of the mentioned,1
+C#,2,Which of these access specifiers must be used for main() method?,public,private,protected,static,1
+C#,2, Keyword used to define call by reference parameter in C# .NET?,&,out,ref,&&,3
+C#,2,Which statement is/are correct?,An argument passed to a ref parameter need not be initialized first,Variables passed as out arguments need to be initialized prior to being passed,"To use a ref parameter, only the calling method must explicitly use the ref keyword",None of the mentioned,4
+C#,2,A type of class which does not have its own objects but acts as a base class for its subclass is known as?,Static class,Sealed class, Abstract class,None of the mentioned,3
+C#,2, The modifier used to define a class which does not have objects of its own but acts as a base class for its subclass is?,sealed,static,new,abstract,4
+C#,2,Choose the correct statements among the following:,An abstract method does not have implementation,An abstract method can take either static or virtual modifiers, An abstract method can be declared only in abstract class,All of the mentioned,4
+C#,2,If a class inheriting an abstract class does not define all of its functions then it is known as?,Abstract,A simple class,static class,None of the mentioned,1
+C#,2, Which of the following modifiers is used when an abstract method is redefined by a derived class?,Overload,Override,Base,virtual,2
+C#,2,Which among the following cannot be used as a datatype for an enum in C#.NET?,short,double,int,all of the mentioned,2
+C#,2,Choose the correct statement about enum used in C#.NET?,By default the first enumerator has a value equal to the number of elements present in the list,Values of the enum elements cannot be populated from database,The value of each successive enumerator is decreased by 1,An enumerator has a white space in its name,2
+C#,2, Which statement correctly defines Interfaces in C#.NET?,Interfaces cannot be inherited,Interfaces consists of data static in nature and static methods, Interfaces consists of only method declaration,None of the mentioned,4
+C#,2,Which of the following cannot be used to declare an interface correctly?,Structures,Properties,Methods,Events,1
+C#,3,Choose the correct statement among the following which supports the fact that C# does not allow the creation of empty structures?,C#.NET supports creation of abstract user-defined data types using structures,"By having empty structures, it would mean that the new data types have no data associated with, which does not make any sense in C#.NET", Basic reason to create structures is the inability to represent real life objects using standard data types offered by the language,All of the mentioned,4
+C#,3,Choose the correct statement about structures as to why they are defined as value types but not reference types?,Since space required for structure variables is allocated on stack which is a form of memory that is automatically available when a variable to be used is in scope,Structures generally are used to represent user defined data types that consists of small amount of data in them. Hence using stack for declaration of such variables is not a problem, All of the mentioned,None of the mentioned,3
+C#,3,Choose the wrong statement about structures in C#.NET?,Structures can be declared within a procedure, Structures can implement an interface but they cannot inherit from another structure,Structure members cannot be declared as protected,A structure cannot be empty,1
+C#,3, When does a structure variable get destroyed?,As variable goes out of the scope, Depends on whether it is created using new or without new operator,"When no reference refers to it, it will get garbage collected",Depends on either we free its memory using free() or delete(),1
+C#,3, Statements about ‘ref’ keyword used in C#.NET are?,The ref keyword causes arguments to be passed by reference,While using ‘ref’ keyword any changes made to the parameter in the method will be reflected in the variable when control is passed back to the calling method,Ref usage eliminates overhead of copying large data items,All of the mentioned,4
+C#,3, Choose the correct statements about enum used in C#.NET?,An enum variable cannot have a protected access modifier, An enum variable cannot have a private access modifier,An enum variable can be defined inside a class or a namespace,An enum variable cannot have a public access modifier,1
+C#,3,Wrong statement about enum used in C#.NET is?,An enum can be declared inside a class, An object cannot be assigned to an enum variable,An enum can be declared outside a class,An enum can have Single and Double values,4
+C#,3,hich among the following differentiates enum in C#.NET from enum in C language?," C is strictly a typed language, C#.NET also is a strictly typed language","In C, language variables of enum types can be used interchangeably with integers using type casts while enum variables cannot be used as a normal integers in C#.NET",All of the mentioned,None of the mentioned,2
+C#,3,Select the correct statement among the given statements?,Properties could be declared inside an interface, Interfaces cannot be inherited,One class could implement only one interface, None of the mentioned,1
+C#,3,Which of the following is the correct way of implementing an interface addition by class maths?, class maths : addition {},class maths implements addition {},class maths imports addition {},none of the mentioned,1
+Html,1,Choose the correct statement.,In traditional XHTML close tag for some elements is optional but not encouraged,In traditional HTML close tag for some elements is optional but not encouraged,In both traditional XHTML and HTML close tag for some elements is not optional, In both traditional XHTML and HTML close tag for some elements is optional,2
+Html,1,Which of the following is not a difference between HTML and XHTML?,Charset in html is “text/html” where as in xhtml it is “application/xml+xhtml”,Tags and attributes are case-insensitive in HTML but not in XHTML, Charset in both html and xhtml is “text/html”,Special characters must be escaped using character entities in XHTML unlike HTML,3
+Html,1,What indicates the content in file is HTML when delivered on the network.,The extension of the file “.html”,Both “.html” extension and “content-type” header,The “content-type” header,The “content_type” header,3
+Html,1, HTML and XHTML stands for ______, Hyper Text Markup Language and Extensible HyperText Markup Language,Hyper Text Marking Language and EXtensible HyperText Marking Language,Hyper Text Markup Language and Extensible HyperText Marking Language,Hyper Text Marking Language and Extensible HyperText Markup Language,1
+Html,1, Choose the correct tag for the largest heading in HTML., h6,header,h1,head,3
+Html,1,Which of the following are table tags?," table, thead, tr, td","colspan, table, tr","table, tt, tr, td","thead, colspan, td, tr",1
+Html,1,Choose the correct HTML for width attribute and its value.,width=”80?, width=80,WIDTH=”80?,WIDTH=80,1
+Html,1,Which feature was already introduced before HTML5?,Canvas/SVG,Video, Geolocation, Frames,4
+Html,1,What application can one create even before the introduction of HTML5?,Forms,Web applications,Mobile applications,Browser based games,1
+Html,1,What if one does not use the doctype in the starting of HTML document?,Browser finds a document in standard mode, Browser finds the document in quirky mode,Browser stops working,Browser crashes after showing the page,2
+Html,1, Which tag supports Non-English language?,<input>,<bdo>,<audio>,<embed>,2
+Html,1,Which element was not removed by HTML5?,<strike>,<center>,<small>,<big>,3
+Html,1,Which element is design to wrap a single piece of information?,<time>,<nav>,<footer>,<head>,1
+Html,1,What an article element should not contain?, Main element,Text or embedded content,Image,video and audio,1
+Html,1, Which of the following is not sectioning elements?,<article>,<nav>,<aside>,<header>,4
+Html,2,How many times can HTML5 events be fired?,Multiple,zero,once,Only two,1
+Html,2, Which of the following statement is true?,Canvas Contains built-in animations,SVG needs scripts to draw elements,"In canvas, drawing is done with pixels",SVG don’t support to event handlers,3
+Html,2,Which of the following element is not removed by HTML5?,vlink,span,marginwidth,compact,2
+Html,2, Which of the following is not a newly added element in HTML5?,article,audio,nav,frameset,4
+Html,2, ____________ defines the accelerator key to be used for keyboard access to an element.,data-X,accesskey,rp,command,2
+Html,2, Which of the following element sets is an item of metadata?,itemscope,itemref,itemtype ,None of the mentioned,1
+Html,2, _____________ defines a group of content that should be used as a figure and may be labeled by a legend element.,figure,output,details,aside,1
+Html,2, Which of the following element is used for highlighting content similarly to how a highlighter pen might be used on important text in a book?,em,strong,mark,bold,3
+Html,2,Which tag is used to encapsulate navigation and then style the elements appropriately as menu items?,ul,List,nav,both ul and li,4
+Html,2, __________ can be used to advise the browser to download media content in the background to improve playback.,poster,autobuffer,data-X,buffer,2
+Html,2,Which plugins can provide the fallback support for old browsers?,Flash,Quicktime,Both Flash and Quicktime,Fireback and Quickertime,3
+Html,2, What is the default type of ‘type’ attribute of <input> element?,text,number,alphanumeric,special characters,1
+Html,2,How image attribute works?, Sets an image background,Set an image as submit button,Set an image anywhere on the page,Bring default image to the page,2
+Html,2,tel attribute is supported by the _________ browser.,Chrome,safari,firefox,opera,2
+Html,2,Before HTML5 where data had to be stored?,cookies,browser,only in Internet Explorer,only in Chrome,1
+Html,3,Which of the following is not a web storage interface?,storage,window,privacy,storageevent,3
+Html,3,Which of the following is not the promises of the open web platform?,Security and Privacy,Performance and Tuning,Media and Real-Time Communications,Device Interconnection,4
+Html,3,In localStorage object data ________,is deleted after the browser has been closed,can be seen but can not edit,is not deleted after the browser has been closed,can be seen as well as edit,3
+Html,3,In sessionStorage object data __________, is not deleted after the browser has been closed,can be seen but can’t edit,can be seen as well as edit,is deleted after the browser has been closed,4
+Html,3, Form validation traditionally was performed by ___________,php,javascript,html,jQuery,2
+Html,3,"All attribute declarations begin with the keyword ____________ followed by the element name, attribute name, attribute type, and default data information.",XML,HTML,ATTLIST,SGML,3
+Html,3,Which of the following is not set with font-style property?, font-style: normal,font-style: italic,font-style: oblique,font-style: capitalize,4
+Html,3,What is the work of <address> element?, contains contact details for author,contains IP address,contains home address, contains url,1
+Html,3,Which property is similar to C/C++ can be applied to comments?, for loop,while loop,ifelse,switch case,3
+Html,3,What is the correct syntax of web address?,scheme://prefix.domain:port/path/filename, path://prefix.port:domain/filename/scheme,prefix://scheme.port:domain/filename/path, port://domain.filenmae:path/scheme/prefix,1

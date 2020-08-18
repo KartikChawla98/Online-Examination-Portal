@@ -13,6 +13,9 @@ import { QuestionFilesComponent } from './question-files/question-files.componen
 import { TestStructuresComponent } from './test-structures/test-structures.component';
 import { LoginComponent } from './login/login.component';
 import { TestsComponent } from './tests/tests.component';
+import { ReportsComponent } from './reports/reports.component';
+import { RegisterComponent } from './register/register.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { TestsComponent } from './tests/tests.component';
     QuestionFilesComponent,
     TestStructuresComponent,
     LoginComponent,
-    TestsComponent
+    TestsComponent,
+    ReportsComponent,
+    RegisterComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -14,8 +14,10 @@ import { Accessor } from '../models/accessor';
 export class RegisterComponent implements OnInit {
   myForm: FormGroup;
   showError: string = null;
+  currDate: Date = new Date();
   currYear: number = new Date().getFullYear();
   constructor(private router: Router, private examService: ExaminationService) { 
+    this.currDate.setFullYear(new Date().getFullYear() - 18);
     this.myForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required]),

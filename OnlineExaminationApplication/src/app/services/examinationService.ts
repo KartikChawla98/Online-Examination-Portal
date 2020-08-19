@@ -127,17 +127,13 @@ export class ExaminationService {
         this.cookieService.delete('Time');
         this.router.navigate(['/tests']);
         return this.http.delete("http://localhost:55859/api/Tests?TestId=" + testId).pipe(
-            map((data) => data)
+            map((data) => data, this.cookieService.set('TestReport', testId.toString()))
         );
     }
-    public getUserReports(userId: number): Observable<Report[]> {
-        return this.http.get("http://localhost:55859/api/Reports?UserId=" + userId).pipe(
-            map((data: any[]) => data.map((item) => this.reportAdapter.adapt(item)))
-        );
-    }
-    public getAllReports(): Observable<Report[]> {
-        return this.http.get("http://localhost:55859/api/Reports").pipe(
-            map((data: any[]) => data.map((item) => this.reportAdapter.adapt(item)))
+    public getAfterTestReport(testId: number) {
+        this.cookieService.delete('TestReport');
+        return this.http.get("http://localhost:55859/api/Reports?TestId=" + testId).pipe(
+            map((data) => this.reportAdapter.adapt(data))
         );
     }
     public getReports(): Observable<Report[]> {

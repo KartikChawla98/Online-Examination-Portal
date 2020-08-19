@@ -2,7 +2,7 @@
     <div *ngIf="reports">
         <h1>View Reports</h1><br/><hr/>
         <h2>Filters</h2><br/>
-        <table class="go-left">
+        <table class=" table table-borderless go-left">
             <tr>
                 <td>
                 Technology:
@@ -54,6 +54,14 @@
             </select>
             </td>
             </tr> 
+            <tr>
+                <td>
+                    Minimum Percentage Score:
+                </td>
+                <td>
+                    <input type="number" [(ngModel)]="filterPercentage" min="0" max="100">
+                </td>
+            </tr>
         </table>
         <br/>
         <button (click)="clearFilters()" class="btn btn-secondary but">Clear Filters</button>
@@ -61,12 +69,23 @@
         <br/><br/><hr/>
         <h2>Filtered Reports</h2><br/>
         <p>
-            <select [(ngModel)]="selectedReport">
+            <select [(ngModel)]="selectedReport" (change)="setPieChart()">
                 <option *ngFor="let report of filteredReports" [ngValue]="report">User's Name: {{report.User.FullName}}, Technology: {{report.Structure.Technology}}, Level: {{report.Structure.Level}}, Result: {{report.Result}}</option>
             </select>
         </p>
         <br/><hr/>
         <div *ngIf="selectedReport.Id">
+            <div class="go-right" style="display: block;">
+                <canvas baseChart 
+                  [data]="pieChartData" 
+                  [labels]="pieChartLabels"
+                  [colors]="pieChartColors" 
+                  [chartType]="pieChartType"
+                  [options]="pieChartOptions"
+                  [plugins]="pieChartPlugins"
+                  [legend]="pieChartLegend">
+                </canvas>
+            </div>
             <div class="go-left">
                 <strong>User ID: </strong> {{selectedReport.User.Id}}<br/>
                 <strong>Test ID:</strong> {{selectedReport.Id}}<br/>
@@ -93,7 +112,8 @@
                             <li>{{testQuestion.Question.Option3}}</li>
                             <li>{{testQuestion.Question.Option4}}</li>
                         </ol>
-                        <strong>User Answer:</strong> {{testQuestion.UserAnswer!=null?testQuestion.UserAnswer:"Not Answered"}}<br/><hr/>
+                        <strong>User Answer:</strong> {{testQuestion.UserAnswer!=null?testQuestion.UserAnswer:"Not Answered"}}<br/>
+                        <strong>Correct Answer:</strong> {{testQuestion.Question.CorrectOption}}<br/><hr/>
                     </div>
                 </ng-container>
             </div>

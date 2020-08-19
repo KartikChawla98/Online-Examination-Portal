@@ -58,30 +58,33 @@ namespace OnlineExaminationAPIProject.Controllers
         {
             using (db_OnlineExaminationEntities db = new db_OnlineExaminationEntities())
             {
-                TestStructure oldData = db.TestStructures.AsNoTracking().Where(ts => ts.Id == testStructure.Id).FirstOrDefault();
+                TestStructure oldData = db.TestStructures/*.AsNoTracking()*/.Where(ts => ts.Id == testStructure.Id).FirstOrDefault();
                 if (oldData == null || !oldData.IsCurrent)
                 {
                     return NotFound();
                 }
+                oldData.SetProperties(AdminId: AdminId, IsCurrent: false/*, SetNumberOfQuestions: false*/);
+                db.SaveChanges();
+                testStructure.Id = 0;
                 if (testStructure.SetProperties(AdminId: AdminId))
                 {
-                    db.Entry(testStructure).State = EntityState.Modified;
+                    db.TestStructures.Add(testStructure);
                     try
                     {
                         db.SaveChanges();
                     }
-                    catch (DbUpdateConcurrencyException)
+                    catch (DbUpdateException)
                     {
-                        if (!TestStructureExists(testStructure.Id))
+                        if (TestStructureExists(testStructure.Id))
                         {
-                            return NotFound();
+                            return Conflict();
                         }
                         else
                         {
                             throw;
                         }
                     }
-                    return Ok(testStructure);
+                return Ok(testStructure);
                 }
                 return BadRequest();
             }  

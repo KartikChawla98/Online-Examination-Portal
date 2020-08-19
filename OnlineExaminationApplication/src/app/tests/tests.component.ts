@@ -5,6 +5,9 @@ import { ExaminationService } from '../services/examinationService';
 import { Structure } from '../models/structure';
 import { TestQuestion } from '../models/testquestion';
 import { MatRadioChange } from '@angular/material/radio';
+import { Report } from '../models/report';
+import { monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, Label, SingleDataSet, Color } from 'ng2-charts';
+import { ChartOptions, ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-tests',
@@ -25,19 +28,32 @@ export class TestsComponent implements OnInit {
   timeLeft: number;
   interval;
   timeout;
+  testReport: Report;
+
+  public pieChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  public pieChartLabels: Label[] = [['Correct'], ['Incorrect'], ['Unanswered']];
+  public pieChartData: SingleDataSet = [0, 0, 0];
+  public pieChartColors: Color[] = [{backgroundColor: ['green', 'red', 'grey'], borderColor: ['green', 'red', 'grey']}]
+  public pieChartType: ChartType = 'pie';
+  public pieChartLegend = true;
+  public pieChartPlugins = [];
+  
   constructor(private cookieService: CookieService, private examService: ExaminationService, private router: Router) { 
     this.selectStructure = new Structure;
+    monkeyPatchChartJsTooltip();
+    monkeyPatchChartJsLegend();
     if (this.cookieService.get('Test'))
       this.startTest();
+    else
+      this.fetchStructures();
   }
   ngDoCheck(): void {
     if (this.cookieService.get('Type') != "User")
       this.router.navigate(['/login'], { queryParams: { type: 'User' }});
-    if (this.cookieService.get('Test') != this.TestId) {
-      this.TestId = this.cookieService.get('Test');
-      if (this.TestId == '')
-        this.fetchStructures();
-    }
+    if (this.cookieService.get('TestReport'))
+      this.getReport();
   }
   fetchStructures(): void {
     this.examService.getTestOptions(parseInt(this.cookieService.get('Id'))).subscribe((data) => {
@@ -67,7 +83,6 @@ export class TestsComponent implements OnInit {
     this.structures = null;
     if (this.cookieService.get('Test')) {
       this.examService.resumeTest(parseInt(this.cookieService.get('Test'))).subscribe((data) => {
-        console.log('HI');
         this.testQuestions = data;
         this.currentQuestion = 0;
         this.timeLeft = new Date(this.cookieService.get('Time')).getTime() - new Date().getTime();
@@ -114,6 +129,22 @@ export class TestsComponent implements OnInit {
   }
   finishTest(): void {
     this.examService.endTest(parseInt(this.cookieService.get('Test'))).subscribe((data) => {});
+  }
+  getReport(): void {
+    this.examService.getAfterTestReport(parseInt(this.cookieService.get('TestReport'))).subscribe((data) => {
+      this.testReport = data;
+      console.log('score' + this.testReport.Score);
+      let correct = this.testReport.Score;
+      let incorrect = 0;
+      let unanswered = 0;
+      this.testReport.TestQuestions.forEach(element => {
+        if (!element.UserAnswer)
+          unanswered++;
+      })
+      incorrect = this.testReport.Structure.NumberOfQuestions - correct - unanswered;
+      this.pieChartData = [correct, incorrect, unanswered];
+      this.fetchStructures();
+    })
   }
   ngOnInit(): void {
   }

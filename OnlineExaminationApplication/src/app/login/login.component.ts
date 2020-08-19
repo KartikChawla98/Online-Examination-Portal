@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
     if(this.myResetForm.valid) {
       this.examService.sendResetMail(this.resetmail.value).subscribe(
         (data) => {
-          this.cookieService.set('Identifier', data);
+          this.cookieService.set('Identifier', sha512(data));
           this.cookieService.set('ResetEmail', this.resetmail.value);
           this.showResetError = "Sent Reset Password Mail!";
         },

@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Report } from '../models/report';
 import { ExaminationService } from '../services/examinationService';
+import { ChartType, ChartOptions, ChartColor } from 'chart.js';
+import { Label, SingleDataSet, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, Color } from 'ng2-charts';
 
 @Component({
   selector: 'app-reports',
@@ -23,8 +25,20 @@ export class ReportsComponent implements OnInit {
   filterCity: string = null;
   filterState: string = null;
   filterResult: string = null;
+  filterPercentage: number = null;
   showError: string = null;
-  showDetails: boolean = false;
+  showDetails: boolean = false; 
+
+  public pieChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  public pieChartLabels: Label[] = [['Correct'], ['Incorrect'], ['Unanswered']];
+  public pieChartData: SingleDataSet = [0, 0, 0];
+  public pieChartColors: Color[] = [{backgroundColor: ['green', 'red', 'grey'], borderColor: ['green', 'red', 'grey']}]
+  public pieChartType: ChartType = 'pie';
+  public pieChartLegend = true;
+  public pieChartPlugins = [];
+
   constructor(private router: Router, private cookieService: CookieService, private examService: ExaminationService) {
     this.selectedReport = new Report;
     this.uniqueTechnologies = [];
@@ -32,6 +46,10 @@ export class ReportsComponent implements OnInit {
     this.uniqueCities = [];
     this.uniqueStates = [];
     this.filteredReports = [];
+    monkeyPatchChartJsTooltip();
+    monkeyPatchChartJsLegend();
+    if (!this.cookieService.get('Type'))
+      this.router.navigate(['/login'], { queryParams: { type: 'User' }});
     this.fetchReports();
   }
   ngDoCheck(): void {
@@ -78,8 +96,10 @@ export class ReportsComponent implements OnInit {
         (this.filterState == null || element.User.State == this.filterState)
         &&
         (this.filterResult == null || element.Result == this.filterResult)
+        &&
+        (this.filterPercentage == null || (element.Score * 100 / element.Structure.NumberOfQuestions) >= this.filterPercentage)
         )
-        this.filteredReports.push(element);
+          this.filteredReports.push(element);
     })
   }
   clearFilters() {
@@ -88,7 +108,19 @@ export class ReportsComponent implements OnInit {
     this.filterCity = null;
     this.filterState = null;
     this.filterResult = null;
+    this.filterPercentage = null;
     this.filteredReports = this.reports;
+  }
+  setPieChart() {
+    let correct = this.selectedReport.Score;
+    let incorrect = 0;
+    let unanswered = 0;
+    this.selectedReport.TestQuestions.forEach(element => {
+      if (!element.UserAnswer)
+        unanswered++;
+    })
+    incorrect = this.selectedReport.Structure.NumberOfQuestions - correct - unanswered;
+    this.pieChartData = [correct, incorrect, unanswered];
   }
   ngOnInit(): void {
   }

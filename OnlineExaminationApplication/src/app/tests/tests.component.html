@@ -1,8 +1,40 @@
 <div class="container">
+    <div *ngIf="testReport">
+            <h1>Test Report</h1><br/>
+            <div class="go-right" style="display: block;">
+                <canvas baseChart 
+                  [data]="pieChartData" 
+                  [labels]="pieChartLabels"
+                  [colors]="pieChartColors" 
+                  [chartType]="pieChartType"
+                  [options]="pieChartOptions"
+                  [plugins]="pieChartPlugins"
+                  [legend]="pieChartLegend">
+                </canvas>
+            </div>
+            <div class="go-left">
+                <strong>User ID: </strong> {{testReport.User.Id}}<br/>
+                <strong>Test ID:</strong> {{testReport.Id}}<br/>
+                <strong>Name: </strong> {{testReport.User.FullName}}<br/>
+                <strong>City: </strong> {{testReport.User.City}}<br/>
+                <strong>State: </strong> {{testReport.User.State}}<br/>
+                <strong>Technology:</strong> {{testReport.Structure.Technology}}<br/>
+                <strong>Level:</strong> {{testReport.Structure.Level}}<br/>
+                <strong>Percentage Score:</strong> {{testReport.Score * 100 / testReport.Structure.NumberOfQuestions}}<br/>
+                <strong>Result:</strong> {{testReport.Result}}<br/>
+                <strong>Start Time:</strong> {{testReport.StartTime}}<br/>
+                <strong>End Time:</strong> {{testReport.EndTime}}<br/>
+                <strong>Number of Questions:</strong> {{testReport.Structure.NumberOfQuestions}}<br/>
+                <strong>Raw Score:</strong> {{testReport.Score}}<br/>
+                <strong>Passing Score:</strong> {{testReport.Structure.PassingScore}}<br/>
+                <strong>Max Minutes Allotted:</strong> {{testReport.Structure.MaxMinutes}}<br/><br/>
+            </div>
+            <hr/>
+    </div>
     <div *ngIf="structures">
         <h1>Test Options</h1><br/>
         <p>
-            <select [(ngModel)]="selectStructure">
+            <select [(ngModel)]="selectStructure" (change)="testReport = null">
                 <option *ngFor="let structure of structures" [ngValue]="structure">Technology: {{structure.Technology}}, Level: {{structure.Level}}</option>
             </select>
         </p>

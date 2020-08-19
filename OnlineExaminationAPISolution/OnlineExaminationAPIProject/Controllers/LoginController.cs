@@ -38,6 +38,20 @@ namespace OnlineExaminationAPIProject.Controllers
             {
                 db.SaveChanges();
             }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    System.Diagnostics.Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
             catch (DbUpdateException)
             {
                 if (db.Users.Count(u => u.Id == user.Id) > 0)
@@ -49,6 +63,7 @@ namespace OnlineExaminationAPIProject.Controllers
                     throw;
                 }
             }
+
             return Ok(user.Id);
         }
         [HttpPut]
@@ -146,12 +161,6 @@ namespace OnlineExaminationAPIProject.Controllers
                         <tr>
                             <td align = 'center' valign = 'top'>
                                    <table border = '0' cellpadding = '0' cellspacing = '0' width = '100%' id = 'emailContainer' style = 'font-family:Arial; color: #333333;'>
-                                                  <!-- Logo -->
-                                                  <tr>
-                                                       <td align='left' valign='top' colspan='2' style='border - bottom: 1px solid #CCCCCC; padding-bottom: 10px;'>
-                                                           <img alt='Cunning Wizzards' border= '0' src='cid:" + WizardImg.ContentId + @"' title= 'Cunning Wizzards' class='sitelogo' width='60%' style='max-width:250px;' />
-                                                       </td>
-                                                  </tr>
                                                   <!--Title-->
                                                   <tr>
                                                       <td align = 'left' valign = 'top' colspan = '2' style = 'border-bottom: 1px solid #CCCCCC; padding: 20px 0 10px 0;'>
@@ -181,7 +190,7 @@ namespace OnlineExaminationAPIProject.Controllers
 </body>
 </html> ";
 
-            string FromMail = "CunningWizards@gmail.com";
+            string FromMail = "cunningwizards@gmail.com";
             string emailTo = Email;
             string subject = "Cunning Wizards: Password Reset";
             //string body = string.Empty;
@@ -203,7 +212,15 @@ namespace OnlineExaminationAPIProject.Controllers
             mail.To.Add(emailTo);
             mail.Subject = subject;
             mail.Body = body;
-            client.Send(mail);
+            mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+            try
+            {
+                client.Send(mail);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
             return Ok(identifier);
         }
     }

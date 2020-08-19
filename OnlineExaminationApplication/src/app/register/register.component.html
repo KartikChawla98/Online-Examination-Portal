@@ -38,7 +38,7 @@
         </div>
         <div class="inp">
             <label for="DOBInput">DOB:</label>
-            <input type="date" class="form-control" id="DOBInput" placeholder="DOB" formControlName="dob">
+            <input type="date" class="form-control" id="DOBInput" placeholder="DOB" formControlName="dob" max="{{currDate | date:'yyyy-MM-dd'}}">
             <div class="alert alert-danger" *ngIf="dob.touched && dob.invalid">
                 <span *ngIf="dob.errors.required">DOB cannot be empty</span>
             </div>

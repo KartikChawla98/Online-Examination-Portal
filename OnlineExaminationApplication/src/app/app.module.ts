@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { CookieService } from 'ngx-cookie-service';
 import { MatRadioModule } from '@angular/material/radio'
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { ChartsModule } from 'ng2-charts';
 
 import { HomeComponent } from './home/home.component';
 import { QuestionFilesComponent } from './question-files/question-files.component';
@@ -36,6 +37,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     FormsModule,
     ReactiveFormsModule,
     MatRadioModule,
+    ChartsModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

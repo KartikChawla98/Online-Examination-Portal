@@ -25,26 +25,70 @@ namespace OnlineExaminationAPIProject.Controllers
             {
                 return NotFound();
             }
-            return Ok(tests);
+            for (int i = 0; i < tests.Count; i++)
+            {
+                Test test = tests[i];
+                if (test.Score == null)
+                {
+                    int passingScore = test.TestStructure.PassingScore;
+                    int totalScore = 0;
+                    foreach (TestQuestion testQuestion in test.TestQuestions)
+                    {
+                        if (testQuestion.Question.CorrectOption == testQuestion.UserAnswer)
+                            totalScore++;
+                    }
+                    test.Score = totalScore;
+                    test.Result = totalScore >= passingScore ? true : false;
+                    test.EndTime = System.DateTime.Now < test.EndTime ? System.DateTime.Now : test.EndTime;
+                    db.SaveChanges();
+                }
+            }
+            return Ok(tests); 
         }
-        //[HttpGet]
-        //[ResponseType(typeof(Test))]
-        //public IHttpActionResult GetSingleReport(int Adminid)
-        //{
-        //    using (db_OnlineExaminationEntities db = new db_OnlineExaminationEntities())
-        //    {
-        //        Test test = db.Tests.Find(id);
-        //        if (test == null)
-        //        {
-        //            return NotFound();
-        //        }
-        //        return Ok(test);
-        //    }
-        //}
+        [HttpGet]
+        [ResponseType(typeof(Test))]
+        public IHttpActionResult GetSingleReport(int TestId)
+        {
+            Test test = db.Tests.Find(TestId);
+            if (test.Score == null)
+            {
+                int passingScore = test.TestStructure.PassingScore;
+                int totalScore = 0;
+                foreach (TestQuestion testQuestion in test.TestQuestions)
+                {
+                    if (testQuestion.Question.CorrectOption == testQuestion.UserAnswer)
+                        totalScore++;
+                }
+                test.Score = totalScore;
+                test.Result = totalScore >= passingScore ? true : false;
+                test.EndTime = System.DateTime.Now < test.EndTime ? System.DateTime.Now : test.EndTime;
+                db.SaveChanges();
+            }
+            return Ok(test);
+        }
         [HttpGet]
         [ResponseType(typeof(List<Test>))]
         public IHttpActionResult GetAllReports()
         {
+            List<Test> tests = db.Tests.ToList();
+            for (int i = 0; i < tests.Count; i++)
+            {
+                Test test = tests[i];
+                if (test.Score == null)
+                {
+                    int passingScore = test.TestStructure.PassingScore;
+                    int totalScore = 0;
+                    foreach (TestQuestion testQuestion in test.TestQuestions)
+                    {
+                        if (testQuestion.Question.CorrectOption == testQuestion.UserAnswer)
+                            totalScore++;
+                    }
+                    test.Score = totalScore;
+                    test.Result = totalScore >= passingScore ? true : false;
+                    test.EndTime = System.DateTime.Now < test.EndTime ? System.DateTime.Now : test.EndTime;
+                    db.SaveChanges();
+                }
+            }
             return Ok(db.Tests.ToList());
         }
     }

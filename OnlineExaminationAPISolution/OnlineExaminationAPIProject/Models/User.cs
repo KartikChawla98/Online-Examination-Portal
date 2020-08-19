@@ -25,15 +25,21 @@ namespace OnlineExaminationAPIProject.Models
         public int Id { get; set; }
         [DataMember]
         public string FullName { get; set; }
+        [DataMember]
         public string Email { get; set; }
+        [DataMember]
         public string Password { get; set; }
+        [DataMember]
         public System.DateTime DOB { get; set; }
+        [DataMember]
         public string Contact { get; set; }
         [DataMember]
         public string City { get; set; }
         [DataMember]
         public string State { get; set; }
+        [DataMember]
         public string HighestQualification { get; set; }
+        [DataMember]
         public int CompletionYear { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

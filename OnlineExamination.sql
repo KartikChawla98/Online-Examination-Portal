@@ -81,7 +81,8 @@ create Table TestQuestions
  )
 
 insert into Admins values 
-('kartikchawla101@gmail.com', HASHBYTES('SHA2_512','123456'), 'Kartik Chawla', '9582225801')
+('kartikchawla101@gmail.com', HASHBYTES('SHA2_512','123456'), 'Kartik Chawla', '9582225801'),
+('500053159@stu.upes.ac.in', HASHBYTES('SHA2_512', '123456'), 'Ganesh Dhingra', '9811639909')
 select * from Admins
 select * from Users
 
